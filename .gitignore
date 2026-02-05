@@ -3,3 +3,5 @@ node_modules/
 .DS_Store
 storage/logs/*.log
 vendor/
+PRD.md
+prd_flow.jpg
