@@ -17,6 +17,9 @@ $stmt = $pdo->prepare("
 $stmt->execute();
 $teachers = $stmt->fetchAll();
 
+// Fetch subjects for dropdowns
+$stmt = $pdo->query("SELECT * FROM subjects ORDER BY name ASC");
+$subjects = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,6 +79,11 @@ $teachers = $stmt->fetchAll();
                     Teachers
                 </a>
                 
+                <a href="/?page=admin_subjects" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    Subjects
+                </a>
+
                 <a href="/?page=admin_audit" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
                     <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     Audit Logs
@@ -89,7 +97,7 @@ $teachers = $stmt->fetchAll();
                     </div>
                     <div class="overflow-hidden">
                          <div class="text-sm font-medium text-white truncate group-hover:text-blue-400 transition-colors"><?= htmlspecialchars($u['name']) ?></div>
-                         <div class="text-xs text-slate-400 truncate">Staff Member</div>
+                         <div class="text-xs text-slate-400 truncate">Administrator</div>
                     </div>
                 </a>
 
@@ -136,15 +144,26 @@ $teachers = $stmt->fetchAll();
             </header>
 
             <div class="p-6 md:p-8 max-w-7xl mx-auto">
-                <div class="flex items-center justify-between mb-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                     <div>
                         <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Manage Teachers</h1>
                         <p class="text-slate-500 dark:text-slate-400 mt-2">Add, edit, or remove faculty members.</p>
                     </div>
-                    <button onclick="document.getElementById('addTeacherModal').showModal()" class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
-                        Add Teacher
-                    </button>
+                    <div class="flex items-center gap-3">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <input type="text" id="teacherSearchInput" onkeyup="searchTeachers()" placeholder="Search teachers..." 
+                                class="pl-10 pr-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm shadow-sm">
+                        </div>
+                        <button onclick="document.getElementById('addTeacherModal').showModal()" class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors whitespace-nowrap">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+                            Add Teacher
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Teachers Table -->
@@ -168,7 +187,7 @@ $teachers = $stmt->fetchAll();
                                     </tr>
                                 <?php else: ?>
                                     <?php foreach ($teachers as $teacher): ?>
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+                                    <tr onclick="window.location.href='/?page=admin_teacher_profile&id=<?= $teacher['id'] ?>'" class="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
                                         <td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
                                             <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs font-bold">
                                                 <?= strtoupper(substr($teacher['name'], 0, 1)) ?>
@@ -177,7 +196,7 @@ $teachers = $stmt->fetchAll();
                                         </td>
                                         <td class="px-6 py-4"><?= htmlspecialchars($teacher['email']) ?></td>
                                         <td class="px-6 py-4"><?= date('M j, Y', strtotime($teacher['created_at'])) ?></td>
-                                        <td class="px-6 py-4 text-right flex items-center justify-end gap-2">
+                                        <td class="px-6 py-4 text-right flex items-center justify-end gap-2" onclick="event.stopPropagation()">
                                             <button onclick="editTeacher(<?= htmlspecialchars(json_encode($teacher)) ?>)" class="p-2 text-slate-400 hover:text-blue-600 transition-colors">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                             </button>
@@ -225,8 +244,17 @@ $teachers = $stmt->fetchAll();
                             <input type="text" name="department" placeholder="e.g., Science" class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-700 p-2.5 focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1">Subjects (comma-separated)</label>
-                            <input type="text" name="subjects" placeholder="e.g., Physics, Math" class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-700 p-2.5 focus:ring-blue-500 focus:border-blue-500">
+                            <label class="block text-sm font-medium mb-1">Subjects</label>
+                            <input type="text" placeholder="Search subjects..." onkeyup="filterSubjects(this)" class="w-full mb-2 rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-700 p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                            <div class="h-32 overflow-y-auto border border-gray-300 dark:border-slate-600 rounded-lg p-2 bg-white dark:bg-slate-700">
+                                <?php foreach ($subjects as $s): ?>
+                                    <label class="flex items-center gap-2 p-1 hover:bg-gray-50 dark:hover:bg-slate-600 rounded cursor-pointer">
+                                        <input type="checkbox" name="subjects[]" value="<?= htmlspecialchars($s['name']) ?>" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                        <span class="text-sm"><?= htmlspecialchars($s['name']) ?> <span class="text-xs text-gray-400">(<?= htmlspecialchars($s['code'] ?? '') ?>)</span></span>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Select all subjects assigned to this teacher.</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-1">Room Number</label>
@@ -297,8 +325,16 @@ $teachers = $stmt->fetchAll();
                             <input type="text" name="department" id="edit_department" placeholder="e.g., Science" class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-700 p-2.5 focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1">Subjects (comma-separated)</label>
-                            <input type="text" name="subjects" id="edit_subjects" placeholder="e.g., Physics, Math" class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-700 p-2.5 focus:ring-blue-500 focus:border-blue-500">
+                            <label class="block text-sm font-medium mb-1">Subjects</label>
+                            <input type="text" placeholder="Search subjects..." onkeyup="filterSubjects(this)" class="w-full mb-2 rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-700 p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                            <div class="h-32 overflow-y-auto border border-gray-300 dark:border-slate-600 rounded-lg p-2 bg-white dark:bg-slate-700">
+                                <?php foreach ($subjects as $s): ?>
+                                    <label class="flex items-center gap-2 p-1 hover:bg-gray-50 dark:hover:bg-slate-600 rounded cursor-pointer">
+                                        <input type="checkbox" name="subjects[]" value="<?= htmlspecialchars($s['name']) ?>" class="edit-subject-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                        <span class="text-sm"><?= htmlspecialchars($s['name']) ?> <span class="text-xs text-gray-400">(<?= htmlspecialchars($s['code'] ?? '') ?>)</span></span>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-1">Room Number</label>
@@ -324,17 +360,31 @@ $teachers = $stmt->fetchAll();
             document.getElementById('edit_employee_no').value = teacher.employee_no || '';
             document.getElementById('edit_department').value = teacher.department || '';
             
-            // Parse subjects from JSON
-            let subjects = '';
+            // Reset checkboxes and search
+            document.querySelectorAll('.edit-subject-checkbox').forEach(cb => cb.checked = false);
+            // Reset search input if exists (assuming it's the previous sibling of the checkbox container)
+            // But we can find it relative to the edit_subjects container if we gave it an ID. 
+            // Better: find the input in the modal
+            const editModal = document.getElementById('editTeacherModal');
+            const searchInput = editModal.querySelector('input[placeholder="Search subjects..."]');
+            if (searchInput) {
+                searchInput.value = '';
+                filterSubjects(searchInput); // trigger reset
+            }
+
+            // Populate checkboxes
             if (teacher.subjects_json) {
                 try {
                     const subjectsArray = JSON.parse(teacher.subjects_json);
-                    subjects = subjectsArray.join(', ');
+                    subjectsArray.forEach(subjectName => {
+                        // Find checkbox with value == subjectName (trim to be safe)
+                        const cb = document.querySelector(`.edit-subject-checkbox[value="${subjectName.trim()}"]`);
+                        if (cb) cb.checked = true;
+                    });
                 } catch (e) {
-                    subjects = '';
+                    console.error("Error parsing subjects", e);
                 }
             }
-            document.getElementById('edit_subjects').value = subjects;
             document.getElementById('edit_office_text').value = teacher.office_text || '';
             
             document.getElementById('editTeacherModal').showModal();
@@ -344,6 +394,53 @@ $teachers = $stmt->fetchAll();
             document.getElementById('delete_teacher_id').value = teacherId;
             document.getElementById('delete_teacher_name').textContent = teacherName;
             document.getElementById('deleteTeacherModal').showModal();
+        }
+
+        function filterSubjects(input) {
+            const filter = input.value.toLowerCase();
+            // The checkbox container is the next sibling element
+            const list = input.nextElementSibling; 
+            const labels = list.getElementsByTagName('label');
+
+            for (let i = 0; i < labels.length; i++) {
+                const label = labels[i];
+                const text = label.textContent || label.innerText;
+                if (text.toLowerCase().indexOf(filter) > -1) {
+                    label.style.display = "";
+                } else {
+                    label.style.display = "none";
+                }
+            }
+        }
+
+        function searchTeachers() {
+            var input, filter, table, tr, tdName, tdEmail, i, txtValueName, txtValueEmail;
+            input = document.getElementById("teacherSearchInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, starting from 1 to skip header
+            // Note: The loop needs to handle the "No teachers found" row properly if it exists, 
+            // but assuming typical structure where we have data rows.
+            for (i = 1; i < tr.length; i++) {
+                // Adjust indices based on your table structure
+                // Name is likely in the first cell (index 0)
+                // Email is likely in the second cell (index 1)
+                tdName = tr[i].getElementsByTagName("td")[0];
+                tdEmail = tr[i].getElementsByTagName("td")[1];
+                
+                if (tdName && tdEmail) {
+                    txtValueName = tdName.textContent || tdName.innerText;
+                    txtValueEmail = tdEmail.textContent || tdEmail.innerText;
+                    
+                    if (txtValueName.toUpperCase().indexOf(filter) > -1 || txtValueEmail.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+            }
         }
     </script>
 </body>

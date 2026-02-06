@@ -25,10 +25,10 @@ if (!$status || !in_array($status, $validStatuses)) {
 try {
     $pdo = db();
     $stmt = $pdo->prepare("
-        INSERT INTO teacher_status_events (teacher_user_id, status, note, set_by_user_id, set_at)
-        VALUES (?, ?, ?, ?, NOW())
+        INSERT INTO teacher_status_events (teacher_user_id, status, set_at)
+        VALUES (?, ?, NOW())
     ");
-    $stmt->execute([$u['id'], $status, $note, $u['id']]);
+    $stmt->execute([$u['id'], $status]);
 
     audit_log('STATUS_UPDATE', 'teacher_status_events', $pdo->lastInsertId(), ['status' => $status]);
     

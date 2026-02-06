@@ -17,9 +17,13 @@ A comprehensive **Teacher Tracking and Profiling System** designed to streamline
 
 The system enforces a **"Status-Only"** policy for students allowing them to see if a teacher is "Available", "In Class", or "Busy" while reserving precise **GPS location monitoring** exclusively for administrators via interactive Leaflet maps.
 
+![Web Screenshot](public/images/web-screenshot-06-02-2026.png)
+
 ## Key Features
 
 ### Student Access
+
+![Web Screenshot](<public/images/web-screenshot-06-02-2026%20(1).png>)
 
 - **Privacy-First Design**: View teacher status (e.g., Available, In Class) without exposing location data.
 - **Search & Filter**: Quickly find teachers by name or department.
@@ -27,11 +31,15 @@ The system enforces a **"Status-Only"** policy for students allowing them to see
 
 ### Teacher Portal
 
+![Web Screenshot](<public/images/web-screenshot-06-02-2026%20(2).png>)
+
 - **Status Management**: Update current availability (Available, In Class, Busy, Offline, Off Campus).
 - **GPS Location Pings**: Securely submit current location using browser geolocation APIs.
 - **Profile Management**: Maintain professional details and subject lists.
 
 ### Admin Console
+
+![Web Screenshot](<public/images/web-screenshot-06-02-2026%20(3).png>)
 
 - **Interactive Map Monitor**: Visualize teacher locations in real-time using Leaflet maps.
 - **Audit Logging**: Comprehensive logs of all privileged actions and location history.

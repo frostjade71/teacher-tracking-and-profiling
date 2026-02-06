@@ -34,7 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Parse subjects into JSON array
     $subjects_json = null;
-    if (!empty($subjects)) {
+    if (!empty($subjects) && is_array($subjects)) {
+        $subjects_json = json_encode($subjects);
+    } elseif (!empty($subjects) && is_string($subjects)) {
+        // Fallback for legacy comma-separated
         $subjects_array = array_map('trim', explode(',', $subjects));
         $subjects_json = json_encode($subjects_array);
     }

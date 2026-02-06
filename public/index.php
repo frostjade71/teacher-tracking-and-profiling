@@ -18,6 +18,10 @@ $routes = [
     'admin_dashboard' => __DIR__ . '/../app/pages/admin_dashboard.php',
     'admin_monitor' => __DIR__ . '/../app/pages/admin_monitor.php',
 
+    // Teacher Pages
+    'teacher_subjects' => __DIR__ . '/../app/pages/teacher_subjects.php',
+    'teacher_subjects_api' => __DIR__ . '/../app/pages/teacher_subjects_api.php',
+
     // Generic Pages
     'profile' => __DIR__ . '/../app/pages/profile.php',
 
@@ -26,6 +30,9 @@ $routes = [
     'logout_post' => __DIR__ . '/../app/actions/logout_post.php',
     'teacher_status_post' => __DIR__ . '/../app/actions/teacher_status_post.php',
     'teacher_location_post' => __DIR__ . '/../app/actions/teacher_location_post.php',
+    'teacher_note_post' => __DIR__ . '/../app/actions/teacher_note_post.php',
+    'teacher_subjects_update' => __DIR__ . '/../app/actions/teacher_subjects_update.php',
+    'teacher_session_update' => __DIR__ . '/../app/actions/teacher_session_update.php',
 
     // Admin API
     'admin_locations_json' => __DIR__ . '/../app/pages/admin_locations_json.php',
@@ -33,12 +40,19 @@ $routes = [
 
     // Admin Pages
     'admin_teachers' => __DIR__ . '/../app/pages/admin_teachers.php',
+    'admin_teacher_profile' => __DIR__ . '/../app/pages/admin_teacher_profile.php',
     'admin_audit' => __DIR__ . '/../app/pages/admin_audit.php',
 
     // Admin Actions
     'admin_teacher_create' => __DIR__ . '/../app/actions/admin_teacher_create.php',
     'admin_teacher_update' => __DIR__ . '/../app/actions/admin_teacher_update.php',
     'admin_teacher_delete' => __DIR__ . '/../app/actions/admin_teacher_delete.php',
+
+    // Admin Subjects
+    'admin_subjects' => __DIR__ . '/../app/pages/admin_subjects.php',
+    'admin_subject_create' => __DIR__ . '/../app/actions/admin_subject_create.php',
+    'admin_subject_update' => __DIR__ . '/../app/actions/admin_subject_update.php',
+    'admin_subject_delete' => __DIR__ . '/../app/actions/admin_subject_delete.php',
 ];
 
 if (!array_key_exists($page, $routes)) {

@@ -15,4 +15,4 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1); // Turn off in production
 
 // Timezone
-date_default_timezone_set('UTC'); // Adjust to your timezone
+date_default_timezone_set('Asia/Manila'); // Philippines Timezone

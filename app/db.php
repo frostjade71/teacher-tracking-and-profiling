@@ -13,6 +13,7 @@ function db(): PDO {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
         ]);
+        $pdo->exec("SET time_zone = '+08:00'");
         return $pdo;
     } catch (PDOException $e) {
         // In production, log this to a file instead of showing it

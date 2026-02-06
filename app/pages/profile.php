@@ -16,6 +16,7 @@ $subjects = [];
 $status = 'UNKNOWN';
 $note = '';
 $set_at = null;
+$current_subject = null;
 
 if ($role === 'teacher') {
     // Fetch Teacher Profile Info
@@ -26,14 +27,16 @@ if ($role === 'teacher') {
     if ($tp) {
         $department = $tp['department'] ?? 'General Faculty';
         $office_text = $tp['office_text'] ?? 'Main Office';
+        $current_subject = $tp['current_subject'] ?? null;
         $subjects = json_decode($tp['subjects_json'] ?? '[]', true);
     } else {
         $department = 'Teacher (Profile Not Setup)';
     }
 
     // Fetch Teacher Status
+    // Fetch Teacher Status
     $stmtStatus = $pdo->prepare("
-        SELECT status, note, set_at 
+        SELECT status, set_at 
         FROM teacher_status_events 
         WHERE teacher_user_id = ? 
         ORDER BY set_at DESC 
@@ -43,8 +46,20 @@ if ($role === 'teacher') {
     $latestStatus = $stmtStatus->fetch();
 
     $status = $latestStatus['status'] ?? 'UNKNOWN';
-    $note = $latestStatus['note'] ?? '';
     $set_at = $latestStatus['set_at'] ?? null;
+
+    // Fetch Teacher Note
+    $stmtNote = $pdo->prepare("
+        SELECT note 
+        FROM teacher_notes 
+        WHERE teacher_user_id = ? 
+        AND (expires_at IS NULL OR expires_at > NOW())
+        ORDER BY created_at DESC 
+        LIMIT 1
+    ");
+    $stmtNote->execute([$user_id]);
+    $latestNote = $stmtNote->fetch();
+    $note = $latestNote['note'] ?? '';
 } elseif ($role === 'admin') {
     $department = 'Administrator';
     $office_text = 'Admin Office';
@@ -124,8 +139,8 @@ $dashboard_link = match($role) {
                         <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                         Dashboard
                      <?php elseif($role === 'teacher'): ?>
-                        <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
-                        Control Panel
+                        <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        Dashboard
                      <?php else: ?>
                         <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         Find Faculty
@@ -143,6 +158,10 @@ $dashboard_link = match($role) {
                      <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     Teachers
                 </a>
+                <a href="/?page=admin_subjects" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    Subjects
+                </a>
                 <a href="/?page=admin_audit" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
                      <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     Audit Logs
@@ -155,6 +174,17 @@ $dashboard_link = match($role) {
                     Live Campus Map
                 </a>
                 <?php endif; ?>
+
+                <?php if ($role === 'teacher'): ?>
+                <div class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider" style="margin-top: 40px;">
+                    Management
+                </div>
+
+                <a href="/?page=teacher_subjects" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    Subjects
+                </a>
+                <?php endif; ?>
             </nav>
 
             <div class="p-4 border-t border-slate-800">
@@ -164,7 +194,7 @@ $dashboard_link = match($role) {
                     </div>
                     <div class="overflow-hidden">
                          <div class="text-sm font-medium text-white truncate group-hover:text-blue-400 transition-colors"><?= htmlspecialchars($u['name']) ?></div>
-                         <div class="text-xs text-slate-400 truncate">Staff Member</div>
+                         <div class="text-xs text-slate-400 truncate"><?= $sidebar_context ?></div>
                     </div>
                 </a>
 
@@ -226,6 +256,20 @@ $dashboard_link = match($role) {
                             <div>
                                 <h1 class="text-3xl font-bold text-slate-900 dark:text-white"><?= htmlspecialchars($u['name']) ?></h1>
                                 <p class="text-slate-500 dark:text-slate-400 font-medium"><?= htmlspecialchars($department) ?> &bull; <?= htmlspecialchars($office_text) ?></p>
+                                
+                                <!-- Current Subject Display -->
+                                <?php if ($role === 'teacher'): ?>
+                                <div class="flex items-center gap-2 mt-2 text-sm">
+                                    <span class="text-slate-400 dark:text-slate-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                    </span>
+                                    <?php if ($current_subject): ?>
+                                        <span class="font-medium text-blue-600 dark:text-blue-400"><?= htmlspecialchars($current_subject) ?></span>
+                                    <?php else: ?>
+                                        <span class="text-slate-400 dark:text-slate-500 italic">Currently not Teaching</span>
+                                    <?php endif; ?>
+                                </div>
+                                <?php endif; ?>
                             </div>
                             
                             <?php if ($role === 'teacher'): ?>
@@ -276,10 +320,10 @@ $dashboard_link = match($role) {
                                             <p class="text-gray-400 dark:text-slate-500 italic">No subjects listed.</p>
                                         <?php endif; ?>
                                     </div>
-                                <?php else: ?>
-                                    <!-- Generic Profile Content -->
+                                <?php elseif ($role !== 'student'): ?>
+                                    <!-- Generic Profile Content (Admins only) -->
                                     <div class="bg-gray-50 dark:bg-slate-700/30 rounded-xl p-5 border border-gray-100 dark:border-slate-700">
-                                        <p class="text-slate-600 dark:text-slate-400">Welcome to your profile page. This information is visible to other users on the platform.</p>
+                                        <p class="text-slate-600 dark:text-slate-400">Welcome to your profile page.</p>
                                     </div>
                                 <?php endif; ?>
                             </div>
