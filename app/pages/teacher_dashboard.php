@@ -852,7 +852,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
             }
 
             try {
-                const res = await fetch('/?page=teacher_location_post', {
+                const res = await fetch('<?= url("?page=teacher_location_post") ?>', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
@@ -960,7 +960,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
     // Fetch teacher's subjects when modal opens
     async function fetchTeacherSubjects() {
         try {
-            const response = await fetch('/?page=teacher_subjects_api');
+            const response = await fetch('<?= url("?page=teacher_subjects_api") ?>');
             if (response.ok) {
                 const data = await response.json();
                 teacherSubjects = data.subjects || [];
@@ -1202,7 +1202,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
         const formData = new FormData();
         formData.append('status', quickUpdateData.status);
         
-        const res = await fetch('/?page=teacher_status_post', {
+        const res = await fetch('<?= url("?page=teacher_status_post") ?>', {
             method: 'POST',
             body: formData
         });
@@ -1219,7 +1219,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
         formData.append('note', quickUpdateData.note);
         formData.append('expiry_option', quickUpdateData.noteDuration || 'MANUAL');
         
-        const res = await fetch('/?page=teacher_note_post', {
+        const res = await fetch('<?= url("?page=teacher_note_post") ?>', {
             method: 'POST',
             body: formData
         });
@@ -1236,7 +1236,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
         formData.append('room', quickUpdateData.roomNumber || '');
         formData.append('subject', quickUpdateData.subject || '');
         
-        const res = await fetch('/?page=teacher_session_update', {
+        const res = await fetch('<?= url("?page=teacher_session_update") ?>', {
             method: 'POST',
             body: formData
         });
@@ -1270,7 +1270,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
                             accuracy_m: pos.coords.accuracy
                         };
                         
-                        const res = await fetch('/?page=teacher_location_post', {
+                        const res = await fetch('<?= url("?page=teacher_location_post") ?>', {
                             method: 'POST',
                             headers: {'Content-Type': 'application/json'},
                             body: JSON.stringify(payload)
@@ -1300,6 +1300,6 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
     startNoteTimer('<?= $currentExpiresAt ?>');
     <?php endif; ?>
     </script>
-    <script src="/assets/mobile.js"></script>
+    <script src="<?= url('assets/mobile.js') ?>"></script>
 </body>
 </html>

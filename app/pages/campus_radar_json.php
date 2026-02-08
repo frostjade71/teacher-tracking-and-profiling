@@ -1,9 +1,14 @@
 <?php
 // app/pages/campus_radar_json.php
 
+// Start output buffering
+ob_start();
+
 require_login();
 require_once __DIR__ . '/../settings.php';
 
+// Clear buffer before header
+ob_clean();
 header('Content-Type: application/json');
 
 $lat = get_setting('campus_center_lat', '11.3003');

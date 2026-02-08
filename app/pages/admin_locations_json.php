@@ -1,10 +1,15 @@
 <?php
 // app/pages/admin_locations_json.php
 
+// Start output buffering
+ob_start();
+
 require_login();
 require_role('admin');
 require_once __DIR__ . '/../settings.php';
 
+// Clear buffer before header
+ob_clean();
 header('Content-Type: application/json');
 
 $pdo = db();

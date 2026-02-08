@@ -1,9 +1,14 @@
 <?php
 // app/pages/teacher_subjects_api.php
 
+// Start output buffering to catch any unwanted output
+ob_start();
+
 require_login();
 require_role('teacher');
 
+// Clear buffer before sending JSON
+ob_clean();
 header('Content-Type: application/json');
 
 $u = current_user();

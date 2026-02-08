@@ -1,10 +1,15 @@
 <?php
 // app/pages/public_locations_json.php
 
+// Start output buffering
+ob_start();
+
 require_login();
 // No role requirement - accessible to all authenticated users
 require_once __DIR__ . '/../settings.php';
 
+// Clear buffer before header
+ob_clean();
 header('Content-Type: application/json');
 
 $pdo = db();

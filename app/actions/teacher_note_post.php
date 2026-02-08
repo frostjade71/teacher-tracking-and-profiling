@@ -1,8 +1,15 @@
 <?php
 // app/actions/teacher_note_post.php
 
+// Start output buffering
+ob_start();
+
 require_login();
 require_role('teacher');
+
+// Clear buffer before logic
+ob_clean();
+header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);

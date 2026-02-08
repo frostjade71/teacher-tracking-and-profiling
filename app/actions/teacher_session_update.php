@@ -2,9 +2,14 @@
 // app/actions/teacher_session_update.php
 // Updates the current teaching session (room and subject)
 
+// Start output buffering
+ob_start();
+
 require_login();
 require_role('teacher');
 
+// Clear buffer before header
+ob_clean();
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

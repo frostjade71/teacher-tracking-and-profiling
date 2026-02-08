@@ -1,6 +1,10 @@
 <?php
 // app/actions/teacher_location_post.php
 
+
+// Start output buffering
+ob_start();
+
 require_login();
 require_role('teacher');
 require_once __DIR__ . '/../settings.php';
@@ -120,6 +124,7 @@ $stmtSession->execute([
 ]);
 
 
+ob_clean();
 header('Content-Type: application/json');
 echo json_encode([
     'success' => true,

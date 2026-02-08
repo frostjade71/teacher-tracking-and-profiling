@@ -2,10 +2,11 @@
 // app/config.php
 
 define('APP_NAME', 'Teacher Tracking System');
-// Auto-detect Base URL for local development vs production subdirectory
-if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
+// detect if we are on localhost
+if (isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false)) {
     define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 } else {
+    // Hardcoded production URL for reliability
     define('BASE_URL', 'https://wh1494404.ispot.cc/Facultylink');
 }
 
