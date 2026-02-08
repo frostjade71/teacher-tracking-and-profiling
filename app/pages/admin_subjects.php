@@ -51,13 +51,13 @@ foreach ($teachers_subjects as $ts) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Subjects | FacultyLink</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
-    <script src="/assets/theme.js"></script>
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
+    <script src="<?= url('assets/theme.js') ?>"></script>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 min-h-screen font-sans text-slate-800 dark:text-slate-200 transition-colors duration-200">
 
@@ -69,7 +69,7 @@ foreach ($teachers_subjects as $ts) {
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
 
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
@@ -193,7 +193,7 @@ foreach ($teachers_subjects as $ts) {
 
     <!-- Add Subject Modal -->
     <dialog id="addSubjectModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-[90%] max-w-md">
-        <form action="/?page=admin_subject_create" method="POST" class="p-6">
+        <form action="<?= url('?page=admin_subject_create') ?>" method="POST" class="p-6">
             <h3 class="text-lg font-bold mb-4">Add New Subject</h3>
             <div class="space-y-4">
                 <div>
@@ -214,7 +214,7 @@ foreach ($teachers_subjects as $ts) {
 
     <!-- Edit Subject Modal -->
     <dialog id="editSubjectModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-[90%] max-w-md">
-        <form action="/?page=admin_subject_update" method="POST" class="p-6">
+        <form action="<?= url('?page=admin_subject_update') ?>" method="POST" class="p-6">
             <h3 class="text-lg font-bold mb-4">Edit Subject</h3>
             <input type="hidden" name="id" id="edit_id">
             <div class="space-y-4">
@@ -249,7 +249,7 @@ foreach ($teachers_subjects as $ts) {
             <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">
                 Are you sure you want to delete <span id="delete_subject_name" class="font-semibold text-slate-900 dark:text-white"></span>?
             </p>
-            <form id="deleteSubjectForm" action="/?page=admin_subject_delete" method="POST">
+            <form id="deleteSubjectForm" action="<?= url('?page=admin_subject_delete') ?>" method="POST">
                 <input type="hidden" name="id" id="delete_subject_id">
                 <div class="flex justify-end gap-3">
                     <button type="button" onclick="document.getElementById('deleteSubjectModal').close()" class="px-4 py-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-medium transition-colors">Cancel</button>

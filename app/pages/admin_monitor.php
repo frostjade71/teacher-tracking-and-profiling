@@ -16,12 +16,12 @@ $u = current_user();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Campus Monitor | Admin</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
@@ -30,8 +30,8 @@ $u = current_user();
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
      crossorigin=""></script>
-    <script src="/assets/map_arrows.js"></script>
-    <script src="/assets/theme.js"></script>
+    <script src="<?= url('assets/map_arrows.js') ?>"></script>
+    <script src="<?= url('assets/theme.js') ?>"></script>
     <style>
         #map { height: 100%; width: 100%; z-index: 1; }
         .leaflet-popup-content-wrapper { border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
@@ -63,7 +63,7 @@ $u = current_user();
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
 
     <div class="flex h-screen">
          <!-- Sidebar (Consistent with Dashboard) -->
@@ -91,7 +91,7 @@ $u = current_user();
             </div>
                 
             <div class="md:hidden mt-2">
-                <a href="/?page=admin_dashboard" class="text-xs text-blue-600 dark:text-blue-400 font-medium">&larr; Back to Dashboard</a>
+                <a href="<?= url('?page=admin_dashboard') ?>" class="text-xs text-blue-600 dark:text-blue-400 font-medium">&larr; Back to Dashboard</a>
             </div>
 
             <!-- Right Side Controls -->
@@ -219,7 +219,7 @@ $u = current_user();
     <div id="mobileSidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden transition-opacity opacity-0"></div>
 
     <!-- Mobile Script -->
-    <script src="/assets/mobile.js"></script>
+    <script src="<?= url('assets/mobile.js') ?>"></script>
 
     <script>
         // Initialize map variables globally
@@ -234,7 +234,7 @@ $u = current_user();
             let radiusMeters = 500;
 
             try {
-                const res = await fetch('/?page=campus_radar_json');
+                const res = await fetch('<?= url("?page=campus_radar_json") ?>');
                 const data = await res.json();
                 if (data.lat && data.lng) {
                     campusLat = parseFloat(data.lat);
@@ -286,7 +286,7 @@ $u = current_user();
             if (!map) return; // Wait for map to be initialized
 
             try {
-                const response = await fetch('/?page=admin_locations_json');
+                const response = await fetch('<?= url("?page=admin_locations_json") ?>');
                 const teachers = await response.json();
 
                 const seenIds = new Set();
@@ -406,7 +406,7 @@ $u = current_user();
 
         async function confirmReset() {
             try {
-                const res = await fetch('/?page=admin_reset_locations', {
+                const res = await fetch('<?= url("?page=admin_reset_locations") ?>', {
                     method: 'POST'
                 });
                 const data = await res.json();
@@ -476,7 +476,7 @@ $u = current_user();
                 formData.append('minutes', m);
                 formData.append('seconds', s);
 
-                const res = await fetch('/?page=admin_settings_save', {
+                const res = await fetch('<?= url("?page=admin_settings_save") ?>', {
                     method: 'POST',
                     body: formData
                 });

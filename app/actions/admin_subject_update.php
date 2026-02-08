@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $code = trim($_POST['code'] ?? '');
 
     if (empty($id) || empty($name)) {
-        header("Location: /?page=admin_subjects&error=Invalid data");
+        header("Location: " . url("?page=admin_subjects&error=Invalid data"));
         exit;
     }
 
@@ -20,13 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("SELECT id FROM subjects WHERE name = ? AND id != ?");
     $stmt->execute([$name, $id]);
     if ($stmt->fetch()) {
-        header("Location: /?page=admin_subjects&error=Subject name already exists");
+        header("Location: " . url("?page=admin_subjects&error=Subject name already exists"));
         exit;
     }
 
     $stmt = $pdo->prepare("UPDATE subjects SET name = ?, code = ? WHERE id = ?");
     $stmt->execute([$name, $code, $id]);
 
-    header("Location: /?page=admin_subjects&success=Subject updated");
+    header("Location: " . url("?page=admin_subjects&success=Subject updated"));
     exit;
 }

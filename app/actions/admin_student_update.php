@@ -43,6 +43,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     audit_log('update_student', 'user', $id, ['name' => $name, 'email' => $email]);
 
-    header("Location: /?page=admin_students");
-    exit;
+    redirect('admin_students');
 }

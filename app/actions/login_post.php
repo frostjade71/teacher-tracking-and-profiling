@@ -2,15 +2,14 @@
 // app/actions/login_post.php
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: /?page=login");
-    exit;
+    redirect('login');
 }
 
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
 if (!$email || !$password) {
-    header("Location: /?page=login&error=Missing credentials");
+    header("Location: " . url("?page=login&error=Missing credentials"));
     exit;
 }
 
@@ -23,13 +22,13 @@ if ($user && password_verify($password, $user['password_hash'])) {
     login_user($user);
     audit_log('LOGIN_SUCCESS', 'user', $user['id']);
 
-    if ($user['role'] === 'student') header("Location: /?page=student_dashboard");
-    elseif ($user['role'] === 'teacher') header("Location: /?page=teacher_dashboard");
-    elseif ($user['role'] === 'admin') header("Location: /?page=admin_dashboard");
+    if ($user['role'] === 'student') redirect('student_dashboard');
+    elseif ($user['role'] === 'teacher') redirect('teacher_dashboard');
+    elseif ($user['role'] === 'admin') redirect('admin_dashboard');
     exit;
 } else {
     // Log failed attempt (careful not to log password)
     audit_log('LOGIN_FAILED', null, null, ['email' => $email]);
-    header("Location: /?page=login&error=Invalid credentials");
+    header("Location: " . url("?page=login&error=Invalid credentials"));
     exit;
 }

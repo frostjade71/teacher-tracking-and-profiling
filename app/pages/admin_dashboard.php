@@ -19,13 +19,13 @@ $totalFaculty = $stmt->fetchColumn();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | FacultyLink</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
-    <script src="/assets/theme.js"></script>
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
+    <script src="<?= url('assets/theme.js') ?>"></script>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 min-h-screen font-sans text-slate-800 dark:text-slate-200 transition-colors duration-200">
 
@@ -37,7 +37,7 @@ $totalFaculty = $stmt->fetchColumn();
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
 
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
@@ -87,10 +87,10 @@ $totalFaculty = $stmt->fetchColumn();
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     
                     <!-- Main Feature: Live Monitor -->
-                    <a href="/?page=admin_monitor" class="group col-span-1 md:col-span-2 row-span-2 bg-white dark:bg-[#0f1729] rounded-2xl border border-gray-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden relative p-1">
+                    <a href="<?= url('?page=admin_monitor') ?>" class="group col-span-1 md:col-span-2 row-span-2 bg-white dark:bg-[#0f1729] rounded-2xl border border-gray-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden relative p-1">
                         <!-- Background Image -->
                         <div class="absolute inset-0 z-0">
-                            <img src="images/mapmap.webp" alt="Map Background" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <img src="<?= url('images/mapmap.webp') ?>" alt="Map Background" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                             <!-- Theme-aware Gradient Overlay (Fade at the left) -->
                             <div class="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent dark:from-[#0f1729] dark:via-[#0f1729]/60 dark:to-transparent"></div>
                         </div>
@@ -144,7 +144,7 @@ $totalFaculty = $stmt->fetchColumn();
                             </h3>
                         </div>
                         <div class="divide-y divide-gray-100 dark:divide-slate-700">
-                            <button onclick="window.location.href='/?page=admin_teachers'" class="w-full text-left p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 flex items-center justify-between group transition-colors duration-200">
+                            <button onclick="window.location.href='<?= url('?page=admin_teachers') ?>'" class="w-full text-left p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 flex items-center justify-between group transition-colors duration-200">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center group-hover:scale-110 transition-transform">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
@@ -154,7 +154,7 @@ $totalFaculty = $stmt->fetchColumn();
                                 <svg class="w-4 h-4 text-gray-300 group-hover:text-indigo-500 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                             </button>
                             
-                            <a href="/?page=admin_audit" class="block p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 flex items-center justify-between group transition-colors duration-200">
+                            <a href="<?= url('?page=admin_audit') ?>" class="block p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 flex items-center justify-between group transition-colors duration-200">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>

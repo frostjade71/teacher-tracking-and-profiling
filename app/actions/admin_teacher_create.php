@@ -55,6 +55,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     audit_log('create_teacher', 'user', $new_user_id, ['name' => $name, 'email' => $email]);
 
-    header("Location: /?page=admin_teachers");
-    exit;
+    redirect('admin_teachers');
 }

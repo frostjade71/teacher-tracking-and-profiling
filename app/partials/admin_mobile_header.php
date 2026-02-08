@@ -2,7 +2,7 @@
 <!-- app/partials/admin_mobile_header.php -->
 <header class="bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 flex items-center justify-between px-4 md:hidden sticky top-0 z-40">
     <div class="flex items-center gap-2">
-        <img src="/assets/favicon/web-app-manifest-512x512.png" alt="Logo" class="w-8 h-8 rounded-lg">
+        <img src="<?= url('assets/favicon/web-app-manifest-512x512.png') ?>" alt="Logo" class="w-8 h-8 rounded-lg">
         <span class="font-bold text-slate-800 dark:text-white truncate">FacultyLink</span>
     </div>
     
@@ -21,4 +21,4 @@
 <div id="mobileSidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden transition-opacity opacity-0"></div>
 
 <!-- Mobile Script -->
-<script src="/assets/mobile.js"></script>
+<script src="<?= url('assets/mobile.js') ?>"></script>

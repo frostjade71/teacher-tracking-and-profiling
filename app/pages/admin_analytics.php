@@ -150,13 +150,13 @@ $topTeachers = $stmt->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics | Admin</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
-    <script src="/assets/theme.js"></script>
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
+    <script src="<?= url('assets/theme.js') ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 min-h-screen font-sans text-slate-800 dark:text-slate-200 transition-colors duration-200">
@@ -169,7 +169,7 @@ $topTeachers = $stmt->fetchAll();
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
 
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->

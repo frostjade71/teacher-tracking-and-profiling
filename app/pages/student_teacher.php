@@ -6,8 +6,7 @@ require_role('student');
 
 $teacher_id = $_GET['id'] ?? null;
 if (!$teacher_id) {
-    header("Location: /?page=student_dashboard");
-    exit;
+    redirect('student_dashboard');
 }
 
 $pdo = db();
@@ -73,20 +72,20 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($teacher['name']) ?> | Profile</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/assets/map_arrows.js"></script>
-    <script src="/assets/theme.js"></script>
+    <script src="<?= url('assets/map_arrows.js') ?>"></script>
+    <script src="<?= url('assets/theme.js') ?>"></script>
     <style>
         #campusMap { height: 100%; width: 100%; z-index: 1; }
         .leaflet-popup-content-wrapper { border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
@@ -104,7 +103,7 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
     
     <div class="flex h-screen overflow-hidden">
 
@@ -120,7 +119,7 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
             <!-- Desktop Header -->
             <div class="hidden md:flex bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-200">
                  <div class="text-sm text-slate-700 dark:text-slate-300 font-semibold flex items-center gap-2">
-                    <a href="/?page=student_dashboard" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Find Faculty</a>
+                    <a href="<?= url('?page=student_dashboard') ?>" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Find Faculty</a>
                     <span class="text-slate-400">/</span>
                     <span class="text-slate-900 dark:text-white">Profile View</span>
                 </div>
@@ -137,7 +136,7 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
             <div class="p-4 md:p-8 max-w-5xl mx-auto">
                 
                 <!-- Back Button -->
-                <a href="/?page=student_dashboard" class="inline-flex items-center text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white mb-6 transition-colors group">
+                <a href="<?= url('?page=student_dashboard') ?>" class="inline-flex items-center text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white mb-6 transition-colors group">
                     <div class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center mr-2 group-hover:scale-110 transition-transform border border-gray-200 dark:border-slate-700">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     </div>
@@ -262,6 +261,6 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
     <script>
 
     </script>
-    <script src="/assets/mobile.js"></script>
+    <script src="<?= url('assets/mobile.js') ?>"></script>
 </body>
 </html>

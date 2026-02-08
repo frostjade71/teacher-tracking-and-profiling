@@ -42,15 +42,15 @@ foreach ($allSubjects as $subj) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Subjects | FacultyLink</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
-    <script src="/assets/theme.js"></script>
-    <link rel="stylesheet" href="/assets/toast.css">
-    <script src="/assets/toast.js"></script>
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
+    <script src="<?= url('assets/theme.js') ?>"></script>
+    <link rel="stylesheet" href="<?= url('assets/toast.css') ?>">
+    <script src="<?= url('assets/toast.js') ?>"></script>
     <style>
         .draggable-item {
             cursor: grab;
@@ -85,7 +85,7 @@ foreach ($allSubjects as $subj) {
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
 
     <!-- Interact.js -->
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
@@ -374,7 +374,7 @@ foreach ($allSubjects as $subj) {
                 const formData = new FormData();
                 formData.append('subjects', JSON.stringify(subjects));
 
-                const res = await fetch('/?page=teacher_subjects_update', {
+                const res = await fetch('<?= url("?page=teacher_subjects_update") ?>', {
                     method: 'POST',
                     body: formData
                 });
@@ -391,6 +391,6 @@ foreach ($allSubjects as $subj) {
             }
         }
     </script>
-    <script src="/assets/mobile.js"></script>
+    <script src="<?= url('assets/mobile.js') ?>"></script>
 </body>
 </html>

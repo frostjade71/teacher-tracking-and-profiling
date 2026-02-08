@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $code = trim($_POST['code'] ?? '');
 
     if (empty($name)) {
-        header("Location: /?page=admin_subjects&error=Name is required");
+        header("Location: " . url("?page=admin_subjects&error=Name is required"));
         exit;
     }
 
@@ -19,13 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("SELECT id FROM subjects WHERE name = ?");
     $stmt->execute([$name]);
     if ($stmt->fetch()) {
-        header("Location: /?page=admin_subjects&error=Subject already exists");
+        header("Location: " . url("?page=admin_subjects&error=Subject already exists"));
         exit;
     }
 
     $stmt = $pdo->prepare("INSERT INTO subjects (name, code) VALUES (?, ?)");
     $stmt->execute([$name, $code]);
 
-    header("Location: /?page=admin_subjects&success=Subject created");
+    header("Location: " . url("?page=admin_subjects&success=Subject created"));
     exit;
 }

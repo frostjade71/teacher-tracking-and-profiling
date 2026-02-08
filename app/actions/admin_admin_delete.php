@@ -25,6 +25,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     audit_log('delete_admin', 'user', $id, []);
 
-    header("Location: /?page=admin_admins");
-    exit;
+    redirect('admin_admins');
 }

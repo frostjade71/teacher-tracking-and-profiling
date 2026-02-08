@@ -6,8 +6,7 @@ require_role('admin');
 
 $teacher_id = $_GET['id'] ?? null;
 if (!$teacher_id) {
-    header("Location: /?page=admin_teachers");
-    exit;
+    redirect('admin_teachers');
 }
 
 $u = current_user();
@@ -73,20 +72,20 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($teacher['name']) ?> | FacultyLink Admin</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/assets/map_arrows.js"></script>
-    <script src="/assets/theme.js"></script>
+    <script src="<?= url('assets/map_arrows.js') ?>"></script>
+    <script src="<?= url('assets/theme.js') ?>"></script>
     <style>
         #campusMap { height: 100%; width: 100%; z-index: 1; }
         .leaflet-popup-content-wrapper { border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
@@ -104,7 +103,7 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
     
     <div class="flex h-screen overflow-hidden">
          <!-- Sidebar -->
@@ -118,16 +117,15 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
                 <div class="flex items-center gap-4">
                      <!-- Theme Toggle Mobile -->
                     <?php include __DIR__ . '/../partials/theme_toggle.php'; ?>
-                    <a href="/?page=admin_teachers" class="text-sm font-medium text-gray-500">Back</a>
+                    <a href="<?= url('?page=admin_teachers') ?>" class="text-sm font-medium text-gray-500">Back</a>
                 </div>
             </header>
-
             <!-- Desktop Header -->
             <div class="hidden md:flex bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-200">
                  <div class="text-sm text-slate-700 dark:text-slate-300 font-semibold flex items-center gap-2">
-                    <a href="/?page=admin_dashboard" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Admin</a>
+                    <a href="<?= url('?page=admin_dashboard') ?>" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Admin</a>
                     <span class="text-slate-400">/</span>
-                    <a href="/?page=admin_teachers" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Teachers</a>
+                    <a href="<?= url('?page=admin_teachers') ?>" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Teachers</a>
                     <span class="text-slate-400">/</span>
                     <span class="text-slate-900 dark:text-white">Profile View</span>
                 </div>
@@ -135,7 +133,7 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
                      <!-- Theme Toggle Desktop -->
                     <?php include __DIR__ . '/../partials/theme_toggle.php'; ?>
                     <!-- Close/Back Button -->
-                    <a href="/?page=admin_teachers" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-500 dark:text-slate-400 transition-colors">
+                    <a href="<?= url('?page=admin_teachers') ?>" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-500 dark:text-slate-400 transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </a>
                 </div>
@@ -337,7 +335,7 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
         if (!campusMapInstance) return;
         
         try {
-            const response = await fetch('/?page=public_locations_json');
+            const response = await fetch('<?= url("?page=public_locations_json") ?>');
             const teachers = await response.json();
             
             teachers.forEach(t => {

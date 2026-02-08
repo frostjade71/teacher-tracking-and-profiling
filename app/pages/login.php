@@ -4,9 +4,9 @@
 // Redirect if already logged in
 if (current_user()) {
     $u = current_user();
-    if ($u['role'] === 'student') header("Location: /?page=student_dashboard");
-    elseif ($u['role'] === 'teacher') header("Location: /?page=teacher_dashboard");
-    elseif ($u['role'] === 'admin') header("Location: /?page=admin_dashboard");
+    if ($u['role'] === 'student') redirect('student_dashboard');
+    elseif ($u['role'] === 'teacher') redirect('teacher_dashboard');
+    elseif ($u['role'] === 'admin') redirect('admin_dashboard');
     exit;
 }
 
@@ -19,12 +19,12 @@ $error = $_GET['error'] ?? null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FacultyLink - Smart Faculty Tracking</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
     <style>
         .landing-page {
             min-height: 100vh;
@@ -318,7 +318,7 @@ $error = $_GET['error'] ?? null;
         </div>
         <p id="loaderText" class="text-sm font-bold text-white mt-4 hidden tracking-wide uppercase animate-pulse">Signing in...</p>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.querySelector('.login-form');
@@ -359,7 +359,7 @@ $error = $_GET['error'] ?? null;
             <!-- Login -->
             <div class="login-card">
                 <div class="login-header">
-                    <img src="/assets/favicon/favicon.svg" width="48" height="48" alt="Logo">
+                    <img src="<?= url('assets/favicon/favicon.svg') ?>" width="48" height="48" alt="Logo">
                     <h2>Sign In</h2>
                     <p>Access your dashboard</p>
                 </div>
@@ -373,7 +373,7 @@ $error = $_GET['error'] ?? null;
                     </div>
                 <?php endif; ?>
 
-                <form action="/?page=login_post" method="POST" class="login-form">
+                <form action="<?= url('?page=login_post') ?>" method="POST" class="login-form">
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" name="email" required placeholder="name@school.edu">
@@ -393,7 +393,7 @@ $error = $_GET['error'] ?? null;
     <footer class="professional-footer">
         <div class="footer-grid">
             <div class="footer-col">
-                <h3><img src="/assets/favicon/favicon.svg" alt="FacultyLink" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 0.5rem;">FacultyLink</h3>
+                <h3><img src="<?= url('assets/favicon/favicon.svg') ?>" alt="FacultyLink" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 0.5rem;">FacultyLink</h3>
                 <p>Revolutionizing faculty tracking and profiling through real-time technology and smart data management.</p>
             </div>
             <div class="footer-col">

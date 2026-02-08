@@ -65,6 +65,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     audit_log('update_teacher', 'user', $id, ['name' => $name, 'email' => $email, 'password_changed' => !empty($password)]);
 
-    header("Location: /?page=admin_teachers");
-    exit;
+    redirect('admin_teachers');
 }

@@ -28,6 +28,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     audit_log('update_admin', 'user', $id, ['name' => $name, 'email' => $email, 'password_changed' => !empty($password)]);
 
-    header("Location: /?page=admin_admins");
-    exit;
+    redirect('admin_admins');
 }

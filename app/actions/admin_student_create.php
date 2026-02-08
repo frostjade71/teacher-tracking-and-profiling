@@ -32,6 +32,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     audit_log('create_student', 'user', $new_user_id, ['name' => $name, 'email' => $email]);
 
-    header("Location: /?page=admin_students");
-    exit;
+    redirect('admin_students');
 }

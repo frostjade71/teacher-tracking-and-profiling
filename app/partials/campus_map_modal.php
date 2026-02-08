@@ -81,12 +81,12 @@ if (!window.hasPatchedShowModal) {
         originalShowModal.call(this);
         if (this.id === 'campusMapModal' && !campusMapInstance) {
             // Log the view for analytics
-            fetch('/?page=log_map_view_post', { method: 'POST' }).catch(console.error);
+            fetch('<?= url("?page=log_map_view_post") ?>', { method: 'POST' }).catch(console.error);
 
             setTimeout(async () => {
                 // Fetch Radar Settings first
                 try {
-                    const res = await fetch('/?page=campus_radar_json');
+                    const res = await fetch('<?= url("?page=campus_radar_json") ?>');
                     const data = await res.json();
                     if (data.lat && data.lng) {
                         campusLat = parseFloat(data.lat);
@@ -146,7 +146,7 @@ async function updateCampusLocations() {
     if (!modal || !modal.open || !campusMapInstance) return;
     
     try {
-        const response = await fetch('/?page=public_locations_json');
+        const response = await fetch('<?= url("?page=public_locations_json") ?>');
         const teachers = await response.json();
         
         const seenIds = new Set();

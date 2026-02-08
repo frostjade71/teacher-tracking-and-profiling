@@ -42,20 +42,20 @@ $teachers = $stmt->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Faculty | Student Dashboard</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/assets/map_arrows.js"></script>
-    <script src="/assets/theme.js"></script>
+    <script src="<?= url('assets/map_arrows.js') ?>"></script>
+    <script src="<?= url('assets/theme.js') ?>"></script>
     <style>
         #campusMap { height: 100%; width: 100%; z-index: 1; }
         .leaflet-popup-content-wrapper { border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
@@ -123,7 +123,7 @@ $teachers = $stmt->fetchAll();
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
     
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar (Shared) -->
@@ -195,7 +195,7 @@ $teachers = $stmt->fetchAll();
                             // $statusConfig logic is handled inside the badge match expression below or we can simplify.
                             // keeping original match logic for badges as it was quite detailed.
                         ?>
-                        <a href="/?page=student_teacher&id=<?= $t['id'] ?>" 
+                        <a href="<?= url('?page=student_teacher&id=' . $t['id']) ?>" 
                            data-name="<?= htmlspecialchars(strtolower($t['name'])) ?>" 
                            data-dept="<?= htmlspecialchars(strtolower($t['department'] ?? '')) ?>"
                            class="teacher-card group relative flex flex-col bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 hover:border-blue-400 dark:hover:border-blue-500 hover:-translate-y-1 hover:z-30">
@@ -358,6 +358,6 @@ $teachers = $stmt->fetchAll();
         }
     });
     </script>
-    <script src="/assets/mobile.js"></script>
+    <script src="<?= url('assets/mobile.js') ?>"></script>
 </body>
 </html>

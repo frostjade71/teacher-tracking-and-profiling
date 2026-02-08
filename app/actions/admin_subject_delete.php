@@ -5,8 +5,7 @@ require_login();
 require_role('admin');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: /?page=admin_subjects");
-    exit;
+    redirect('admin_subjects');
 }
 
 $id = $_POST['id'] ?? null;
@@ -20,5 +19,4 @@ $pdo = db();
 $stmt = $pdo->prepare("DELETE FROM subjects WHERE id = ?");
 $stmt->execute([$id]);
 
-header("Location: /?page=admin_subjects");
-exit;
+redirect('admin_subjects');

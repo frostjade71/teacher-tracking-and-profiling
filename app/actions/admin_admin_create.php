@@ -32,6 +32,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     audit_log('create_admin', 'user', $new_user_id, ['name' => $name, 'email' => $email]);
 
-    header("Location: /?page=admin_admins");
-    exit;
+    redirect('admin_admins');
 }

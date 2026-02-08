@@ -15,8 +15,7 @@ function current_user(): ?array {
 function require_login(): array {
     $u = current_user();
     if (!$u) {
-        header("Location: /?page=login");
-        exit;
+        redirect('login');
     }
     return $u;
 }

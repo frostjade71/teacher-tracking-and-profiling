@@ -89,10 +89,10 @@ $sidebar_context = match($role) {
 };
 
 $dashboard_link = match($role) {
-    'admin' => '/?page=admin_dashboard',
-    'student' => '/?page=student_dashboard',
-    'teacher' => '/?page=teacher_dashboard',
-    default => '/'
+    'admin' => url('?page=admin_dashboard'),
+    'student' => url('?page=student_dashboard'),
+    'teacher' => url('?page=teacher_dashboard'),
+    default => url()
 };
 ?>
 <!DOCTYPE html>
@@ -102,13 +102,13 @@ $dashboard_link = match($role) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile | FacultyLink</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
-    <script src="/assets/theme.js"></script>
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
+    <script src="<?= url('assets/theme.js') ?>"></script>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-200 font-sans text-slate-800 dark:text-slate-200">
     
@@ -120,7 +120,7 @@ $dashboard_link = match($role) {
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
     
     <div class="flex h-screen overflow-hidden">
          <!-- Sidebar -->
@@ -131,7 +131,7 @@ $dashboard_link = match($role) {
             <!-- Sidebar for Teachers/Students -->
             <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 hidden md:flex flex-col border-r border-slate-800">
                 <div class="h-16 flex items-center px-4 border-b border-slate-800 gap-2">
-                    <img src="/assets/favicon/web-app-manifest-512x512.png" class="w-7 h-7 rounded-lg" alt="Logo" style="width: 28px; height: 28px;">
+                    <img src="<?= url('assets/favicon/web-app-manifest-512x512.png') ?>" class="w-7 h-7 rounded-lg" alt="Logo" style="width: 28px; height: 28px;">
                     <span class="text-base font-bold tracking-tight" style="white-space: nowrap;">FacultyLink <span class="text-blue-500"><?= $sidebar_context ?></span></span>
                 </div>
                 
@@ -152,7 +152,7 @@ $dashboard_link = match($role) {
                     <?php 
                         $mapRedirectPage = ($role === 'teacher') ? 'teacher_dashboard' : 'student_dashboard';
                     ?>
-                    <a href="/?page=<?= $mapRedirectPage ?>&openMap=1" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                    <a href="<?= url('?page=' . $mapRedirectPage . '&openMap=1') ?>" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
                         <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
                         Live Campus Map
                     </a>
@@ -162,7 +162,7 @@ $dashboard_link = match($role) {
                         Management
                     </div>
 
-                    <a href="/?page=teacher_subjects" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                    <a href="<?= url('?page=teacher_subjects') ?>" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
                         <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                         Subjects
                     </a>
@@ -170,7 +170,7 @@ $dashboard_link = match($role) {
                 </nav>
 
                 <div class="p-4 border-t border-slate-800">
-                    <a href="/?page=profile" class="px-3 mb-4 flex items-center gap-3 hover:bg-slate-800 rounded-lg py-2 transition-colors group">
+                    <a href="<?= url('?page=profile') ?>" class="px-3 mb-4 flex items-center gap-3 hover:bg-slate-800 rounded-lg py-2 transition-colors group">
                         <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors">
                             <?= strtoupper(substr($u['name'], 0, 1)) ?>
                         </div>
@@ -180,7 +180,7 @@ $dashboard_link = match($role) {
                         </div>
                     </a>
 
-                    <a href="/?page=logout_post" class="flex items-center px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+                    <a href="<?= url('?page=logout_post') ?>" class="flex items-center px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                         Sign Out
                     </a>

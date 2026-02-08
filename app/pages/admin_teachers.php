@@ -28,13 +28,13 @@ $subjects = $stmt->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Teachers | FacultyLink</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
-    <script src="/assets/theme.js"></script>
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
+    <script src="<?= url('assets/theme.js') ?>"></script>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 min-h-screen font-sans text-slate-800 dark:text-slate-200 transition-colors duration-200">
 
@@ -46,7 +46,7 @@ $subjects = $stmt->fetchAll();
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
 
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
@@ -121,7 +121,7 @@ $subjects = $stmt->fetchAll();
                                     </tr>
                                 <?php else: ?>
                                     <?php foreach ($teachers as $teacher): ?>
-                                    <tr onclick="window.location.href='/?page=admin_teacher_profile&id=<?= $teacher['id'] ?>'" class="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+                                    <tr onclick="window.location.href='<?= url('?page=admin_teacher_profile&id=' . $teacher['id']) ?>'" class="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
                                         <td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
                                             <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs font-bold">
                                                 <?= strtoupper(substr($teacher['name'], 0, 1)) ?>
@@ -151,7 +151,7 @@ $subjects = $stmt->fetchAll();
 
     <!-- Add Teacher Modal -->
     <dialog id="addTeacherModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-[90%] max-w-md">
-        <form action="/?page=admin_teacher_create" method="POST" class="p-6">
+        <form action="<?= url('?page=admin_teacher_create') ?>" method="POST" class="p-6">
             <h3 class="text-lg font-bold mb-4">Add New Teacher</h3>
             <div class="space-y-4">
                 <div>
@@ -219,7 +219,7 @@ $subjects = $stmt->fetchAll();
             <p class="text-sm text-slate-600 dark:text-slate-300 mb-6">
                 Are you sure you want to delete <span id="delete_teacher_name" class="font-semibold text-slate-900 dark:text-white"></span>? All associated data will be permanently removed.
             </p>
-            <form id="deleteTeacherForm" action="/?page=admin_teacher_delete" method="POST">
+            <form id="deleteTeacherForm" action="<?= url('?page=admin_teacher_delete') ?>" method="POST">
                 <input type="hidden" name="id" id="delete_teacher_id">
                 <div class="flex justify-end gap-3">
                     <button type="button" onclick="document.getElementById('deleteTeacherModal').close()" class="px-4 py-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-medium transition-colors">Cancel</button>
@@ -231,7 +231,7 @@ $subjects = $stmt->fetchAll();
 
     <!-- Edit Teacher Modal -->
     <dialog id="editTeacherModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-[90%] max-w-md">
-        <form action="/?page=admin_teacher_update" method="POST" class="p-6">
+        <form action="<?= url('?page=admin_teacher_update') ?>" method="POST" class="p-6">
             <h3 class="text-lg font-bold mb-4">Edit Teacher</h3>
             <input type="hidden" name="id" id="edit_id">
             <div class="space-y-4">

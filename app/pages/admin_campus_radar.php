@@ -13,21 +13,21 @@ $u = current_user();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Radar | Admin</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="/assets/app.css">
+    <link rel="icon" type="image/png" href="<?= url('assets/favicon/favicon-96x96.png') ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?= url('assets/favicon/favicon.svg') ?>" />
+    <link rel="shortcut icon" href="<?= url('assets/favicon/favicon.ico') ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= url('assets/favicon/apple-touch-icon.png') ?>" />
+    <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
+    <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/assets/theme.js"></script>
-    <link rel="stylesheet" href="/assets/toast.css">
-    <script src="/assets/toast.js"></script>
+    <script src="<?= url('assets/theme.js') ?>"></script>
+    <link rel="stylesheet" href="<?= url('assets/toast.css') ?>">
+    <script src="<?= url('assets/toast.js') ?>"></script>
     <style>
         #radarMap { height: 600px; width: 100%; z-index: 1; border-radius: 12px; }
         html.dark .leaflet-layer { filter: brightness(0.8) contrast(1.2) grayscale(0.2); }
@@ -43,7 +43,7 @@ $u = current_user();
             <div class="loader-square"></div>
         </div>
     </div>
-    <script src="/assets/loader.js"></script>
+    <script src="<?= url('assets/loader.js') ?>"></script>
 
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
@@ -59,7 +59,7 @@ $u = current_user();
              <!-- Top Bar -->
             <header class="hidden md:flex bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-200">
                 <div class="flex items-center text-sm text-slate-700 dark:text-slate-300 font-semibold">
-                    <a href="/?page=admin_dashboard" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Dashboard</a>
+                    <a href="<?= url('?page=admin_dashboard') ?>" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Dashboard</a>
                     <span class="mx-2 text-slate-400">/</span>
                     <span class="text-slate-900 dark:text-white">Campus Radar</span>
                 </div>
@@ -142,7 +142,7 @@ $u = current_user();
         async function initMap() {
             // Fetch current settings
             try {
-                const res = await fetch('/?page=campus_radar_json');
+                const res = await fetch('<?= url("?page=campus_radar_json") ?>');
                 const data = await res.json();
                 
                 const lat = data.lat || 11.3003;
@@ -251,7 +251,7 @@ $u = current_user();
                 formData.append('lng', lng);
                 formData.append('radius', radius);
 
-                const res = await fetch('/?page=admin_save_radar', {
+                const res = await fetch('<?= url("?page=admin_save_radar") ?>', {
                     method: 'POST',
                     body: formData
                 });
