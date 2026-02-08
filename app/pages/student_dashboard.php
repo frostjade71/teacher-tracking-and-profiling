@@ -126,60 +126,16 @@ $teachers = $stmt->fetchAll();
     <script src="/assets/loader.js"></script>
     
     <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 hidden md:flex flex-col border-r border-slate-800">
-            <div class="h-16 flex items-center px-4 border-b border-slate-800 gap-2">
-                <img src="/assets/favicon/web-app-manifest-512x512.png" class="w-7 h-7 rounded-lg" alt="Logo" style="width: 28px; height: 28px;">
-                <span class="text-base font-bold tracking-tight" style="white-space: nowrap;">FacultyLink <span class="text-blue-500">Student</span></span>
-            </div>
-            
-            <nav class="flex-1 px-3 py-6 space-y-1">
-                <div class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Main
-                </div>
-                <a href="/?page=student_dashboard" class="flex items-center px-3 py-2.5 text-sm font-medium bg-blue-600 rounded-lg text-white group">
-                    <svg class="w-5 h-5 mr-3 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    Find Faculty
-                </a>
-                
-                <button onclick="document.getElementById('campusMapModal').showModal()" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors w-full">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                    Live Campus Map
-                </button>
-            </nav>
+        <!-- Sidebar (Shared) -->
+        <?php include __DIR__ . '/../partials/student_sidebar.php'; ?>
 
-            <div class="p-4 border-t border-slate-800">
-                <a href="/?page=profile" class="px-3 mb-4 flex items-center gap-3 hover:bg-slate-800 rounded-lg py-2 transition-colors group">
-                     <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors">
-                        <?= strtoupper(substr(current_user()['name'], 0, 1)) ?>
-                    </div>
-                    <div class="overflow-hidden">
-                         <div class="text-sm font-medium text-white truncate group-hover:text-blue-400 transition-colors"><?= htmlspecialchars(current_user()['name']) ?></div>
-                         <div class="text-xs text-slate-400 truncate">Student</div>
-                    </div>
-                </a>
 
-                <a href="/?page=logout_post" class="flex items-center px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Sign Out
-                </a>
-            </div>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
+        <!-- Wrapper -->
+        <div class="flex-1 flex flex-col min-w-0">
              <!-- Header for Mobile -->
-             <header class="bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 flex items-center justify-between px-6 md:hidden sticky top-0 z-20">
-                <span class="font-bold text-slate-800 dark:text-white">FacultyLink</span>
-                <div class="flex items-center gap-4">
-                     <!-- Theme Toggle Mobile -->
-                    <button onclick="window.toggleTheme()" class="p-2 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white transition-colors">
-                         <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                         <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
-                    <a href="/?page=logout_post" class="text-sm font-medium text-gray-500 dark:text-slate-400">Sign Out</a>
-                </div>
-            </header>
+             <?php include __DIR__ . '/../partials/student_mobile_header.php'; ?>
+
 
             <!-- Desktop Header / Top Bar -->
             <div class="hidden md:flex bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-200">
@@ -188,29 +144,29 @@ $teachers = $stmt->fetchAll();
                 </div>
                 <div class="flex items-center gap-4">
                     <!-- Theme Toggle Desktop -->
-                    <button onclick="window.toggleTheme()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-500 dark:text-slate-400 transition-colors">
-                        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
+                    <!-- Theme Toggle Desktop -->
+                    <?php include __DIR__ . '/../partials/theme_toggle.php'; ?>
                 </div>
             </div>
 
-            <div class="max-w-6xl mx-auto px-6 py-10 font-sans">
-                
-                <div class="relative text-center mb-10 pt-6">
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+
+            <div class="p-4 md:p-8 max-w-7xl mx-auto font-sans">
+                <div class="relative text-center mb-6 md:mb-10 pt-6">
                     <!-- Decorative background glow -->
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] md:w-[400px] h-[200px] bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-[60px] -z-10 pointer-events-none"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150px] md:w-[400px] h-[150px] md:h-[200px] bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-[40px] md:blur-[60px] -z-10 pointer-events-none"></div>
                     
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wider mb-4 border border-blue-100 dark:border-blue-800 shadow-sm">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wider mb-2 md:mb-4 border border-blue-100 dark:border-blue-800 shadow-sm mx-auto">
                         <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
                         Real-time Faculty Tracking
                     </div>
                     
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-3 tracking-tight">
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-2 md:mb-3 tracking-tight">
                         Find Your <span id="rotatingText" class="rotating-text text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Professors</span>
                     </h1>
                     
-                    <p class="text-slate-600 dark:text-slate-400 text-base max-w-xl mx-auto leading-relaxed">
+                    <p class="text-slate-600 dark:text-slate-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
                         Locate faculty members instantly. Check live availability status and office locations across campus.
                     </p>
                 </div>
@@ -223,7 +179,7 @@ $teachers = $stmt->fetchAll();
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                         <input type="text" id="teacherSearch" value="<?= htmlspecialchars($search) ?>" 
-                            class="w-full px-4 py-4 bg-transparent text-lg font-medium text-slate-700 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none"
+                            class="w-full px-4 py-4 bg-transparent text-sm md:text-lg font-medium text-slate-700 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none"
                             placeholder="Search by professor name or department...">
                         <button class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold text-sm transition-all shadow-lg shadow-blue-500/30 hover:shadow-blue-600/40">
                             Search
@@ -323,6 +279,7 @@ $teachers = $stmt->fetchAll();
 
             </div>
         </main>
+        </div>
     </div>
 
     <!-- Live Campus Map Modal (Shared) -->
@@ -401,5 +358,6 @@ $teachers = $stmt->fetchAll();
         }
     });
     </script>
+    <script src="/assets/mobile.js"></script>
 </body>
 </html>

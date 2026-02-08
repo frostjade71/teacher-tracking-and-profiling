@@ -175,16 +175,11 @@ $topTeachers = $stmt->fetchAll();
         <!-- Sidebar -->
         <?php include __DIR__ . '/../partials/admin_sidebar.php'; ?>
 
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
+        <!-- Wrapper -->
+        <div class="flex-1 flex flex-col min-w-0">
             <!-- Header for Mobile -->
-            <header class="bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 flex items-center justify-between px-6 md:hidden">
-                <span class="font-bold text-slate-800 dark:text-white">FacultyLink</span>
-                <button onclick="window.toggleTheme()" class="p-2 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white transition-colors">
-                     <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                     <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                </button>
-            </header>
+            <?php include __DIR__ . '/../partials/admin_mobile_header.php'; ?>
+
 
             <!-- Top Bar Desktop -->
             <header class="hidden md:flex bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-200">
@@ -194,24 +189,25 @@ $topTeachers = $stmt->fetchAll();
                     <span class="text-slate-900 dark:text-white">Analytics</span>
                 </div>
                 <!-- Theme Toggle -->
-                <button onclick="window.toggleTheme()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-500 dark:text-slate-400 transition-colors">
-                    <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                </button>
+                <!-- Theme Toggle -->
+                <?php include __DIR__ . '/../partials/theme_toggle.php'; ?>
             </header>
 
-            <div class="p-6 md:p-8 max-w-7xl mx-auto space-y-6">
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+
+            <div class="p-4 md:p-8 max-w-7xl mx-auto space-y-6">
                 
-                <div class="relative text-left mb-10 pt-6">
+                <div class="relative text-left mb-6 md:mb-10 pt-6">
                     <!-- Decorative background glow -->
-                    <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[200px] md:w-[400px] h-[200px] bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-[60px] -z-10 pointer-events-none"></div>
+                    <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[150px] md:w-[400px] h-[150px] md:h-[200px] bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-[40px] md:blur-[60px] -z-10 pointer-events-none"></div>
                     
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wider mb-4 border border-blue-100 dark:border-blue-800 shadow-sm">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wider mb-2 md:mb-4 border border-blue-100 dark:border-blue-800 shadow-sm">
                         <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
                         Analytics Overview
                     </div>
                     
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-3 tracking-tight">
+                    <h1 class="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-2 md:mb-3 tracking-tight">
                         Platform <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Activity & Stats</span>
                     </h1>
                 </div>
@@ -534,5 +530,8 @@ $topTeachers = $stmt->fetchAll();
         }
 
     </script>
+        </main>
+        </div>
+    </div>
 </body>
 </html>

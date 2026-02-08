@@ -16,7 +16,7 @@
     .leaflet-popup-content h3 { margin: 0; }
 </style>
 
-<dialog id="campusMapModal" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/70 dark:bg-slate-800 w-full max-w-6xl h-[80vh]">
+<dialog id="campusMapModal" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/70 dark:bg-slate-800 w-[90%] max-w-6xl h-[80vh]">
     <div class="flex flex-col h-full">
         <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-700">
             <div class="flex items-center gap-3">

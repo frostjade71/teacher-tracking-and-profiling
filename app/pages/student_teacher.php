@@ -107,60 +107,15 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
     <script src="/assets/loader.js"></script>
     
     <div class="flex h-screen overflow-hidden">
-         <!-- Sidebar -->
-        <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 hidden md:flex flex-col border-r border-slate-800">
-            <div class="h-16 flex items-center px-4 border-b border-slate-800 gap-2">
-                <img src="/assets/favicon/web-app-manifest-512x512.png" class="w-7 h-7 rounded-lg" alt="Logo" style="width: 28px; height: 28px;">
-                <span class="text-base font-bold tracking-tight" style="white-space: nowrap;">FacultyLink <span class="text-blue-500">Student</span></span>
-            </div>
-            
-            <nav class="flex-1 px-3 py-6 space-y-1">
-                <div class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Main
-                </div>
-                <a href="/?page=student_dashboard" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    Find Faculty
-                </a>
-                
-                <button onclick="document.getElementById('campusMapModal').showModal()" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors w-full">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                    Live Campus Map
-                </button>
-            </nav>
 
-            <div class="p-4 border-t border-slate-800">
-                <a href="/?page=profile" class="px-3 mb-4 flex items-center gap-3 hover:bg-slate-800 rounded-lg py-2 transition-colors group">
-                     <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors">
-                        <?= strtoupper(substr(current_user()['name'], 0, 1)) ?>
-                    </div>
-                    <div class="overflow-hidden">
-                         <div class="text-sm font-medium text-white truncate group-hover:text-blue-400 transition-colors"><?= htmlspecialchars(current_user()['name']) ?></div>
-                         <div class="text-xs text-slate-400 truncate">Student</div>
-                    </div>
-                </a>
+         <!-- Sidebar (Shared) -->
+         <?php include __DIR__ . '/../partials/student_sidebar.php'; ?>
 
-                <a href="/?page=logout_post" class="flex items-center px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Sign Out
-                </a>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
+        <!-- Wrapper -->
+        <div class="flex-1 flex flex-col min-w-0">
              <!-- Header for Mobile -->
-             <header class="bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 flex items-center justify-between px-6 md:hidden sticky top-0 z-20">
-                <span class="font-bold text-slate-800 dark:text-white">FacultyLink</span>
-                <div class="flex items-center gap-4">
-                     <!-- Theme Toggle Mobile -->
-                    <button onclick="window.toggleTheme()" class="p-2 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white transition-colors">
-                         <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                         <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
-                    <a href="/?page=student_dashboard" class="text-sm font-medium text-gray-500">Back</a>
-                </div>
-            </header>
+             <?php include __DIR__ . '/../partials/student_mobile_header.php'; ?>
+
 
             <!-- Desktop Header -->
             <div class="hidden md:flex bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-200">
@@ -171,22 +126,36 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
                 </div>
                 <div class="flex items-center gap-4">
                      <!-- Theme Toggle Desktop -->
-                    <button onclick="window.toggleTheme()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-500 dark:text-slate-400 transition-colors">
-                        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
+                     <!-- Theme Toggle Desktop -->
+                    <?php include __DIR__ . '/../partials/theme_toggle.php'; ?>
                 </div>
             </div>
 
-            <div class="p-6 md:p-12 max-w-5xl mx-auto">
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+
+            <div class="p-4 md:p-8 max-w-5xl mx-auto">
                 
+                <!-- Back Button -->
+                <a href="/?page=student_dashboard" class="inline-flex items-center text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white mb-6 transition-colors group">
+                    <div class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center mr-2 group-hover:scale-110 transition-transform border border-gray-200 dark:border-slate-700">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    </div>
+                    <span class="font-medium text-sm">Back to Dashboard</span>
+                </a>
+
+                <?php if (!$teacher): ?>
+                    <div class="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-4 rounded-xl text-center border border-red-100 dark:border-red-800">
+                        Teacher not found.
+                    </div>
+                <?php else: ?>
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden transition-colors">
                     
                     <!-- Header Banner -->
                     <div class="h-32 bg-slate-900 dark:bg-slate-950 w-full relative">
                         <div class="absolute -bottom-10 left-8">
                              <div class="h-24 w-24 rounded-2xl bg-white dark:bg-slate-800 p-1 shadow-md">
-                                 <div class="w-full h-full bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center text-3xl font-bold text-slate-400 dark:text-slate-300">
+                                 <div class="w-full h-full bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center text-xl md:text-3xl font-bold text-slate-400 dark:text-slate-300">
                                     <?= strtoupper(substr($teacher['name'], 0, 1)) ?>
                                  </div>
                              </div>
@@ -279,9 +248,11 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
 
                     </div>
                 </div>
+                <?php endif; ?>
 
             </div>
         </main>
+        </div>
     </div>
 
     <!-- Live Campus Map Modal (Shared) -->
@@ -291,5 +262,6 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
     <script>
 
     </script>
+    <script src="/assets/mobile.js"></script>
 </body>
 </html>

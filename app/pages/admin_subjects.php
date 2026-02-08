@@ -77,22 +77,11 @@ foreach ($teachers_subjects as $ts) {
         <?php include __DIR__ . '/../partials/admin_sidebar.php'; ?>
 
 
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
+        <!-- Wrapper -->
+        <div class="flex-1 flex flex-col min-w-0">
             <!-- Header for Mobile -->
-            <header class="bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 flex items-center justify-between px-6 md:hidden">
-                <span class="font-bold text-slate-800 dark:text-white">FacultyLink</span>
-                <div class="flex items-center gap-4">
-                     <!-- Theme Toggle Mobile -->
-                    <button onclick="window.toggleTheme()" class="p-2 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white transition-colors">
-                         <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                         <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
-                    <button class="text-gray-500 hover:text-gray-700 dark:text-slate-400">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                    </button>
-                </div>
-            </header>
+            <?php include __DIR__ . '/../partials/admin_mobile_header.php'; ?>
+
 
             <!-- Top Bar Desktop -->
             <header class="hidden md:flex bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-200">
@@ -103,18 +92,19 @@ foreach ($teachers_subjects as $ts) {
                 </div>
                 <div class="flex items-center gap-4">
                     <!-- Theme Toggle Desktop -->
-                    <button onclick="window.toggleTheme()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-500 dark:text-slate-400 transition-colors">
-                        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
+                    <!-- Theme Toggle Desktop -->
+                    <?php include __DIR__ . '/../partials/theme_toggle.php'; ?>
                 </div>
             </header>
 
-            <div class="p-6 md:p-8 max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+
+            <div class="p-4 md:p-8 max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 md:mb-8">
                     <div>
-                        <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Manage Subjects</h1>
-                        <p class="text-slate-500 dark:text-slate-400 mt-2">Create and edit subjects.</p>
+                        <h1 class="text-xl md:text-3xl font-bold text-slate-900 dark:text-white">Manage Subjects</h1>
+                        <p class="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-1 md:mt-2">Add, edit, or remove subjects.</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="relative">
@@ -202,7 +192,7 @@ foreach ($teachers_subjects as $ts) {
     </div>
 
     <!-- Add Subject Modal -->
-    <dialog id="addSubjectModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-full max-w-md">
+    <dialog id="addSubjectModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-[90%] max-w-md">
         <form action="/?page=admin_subject_create" method="POST" class="p-6">
             <h3 class="text-lg font-bold mb-4">Add New Subject</h3>
             <div class="space-y-4">
@@ -223,7 +213,7 @@ foreach ($teachers_subjects as $ts) {
     </dialog>
 
     <!-- Edit Subject Modal -->
-    <dialog id="editSubjectModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-full max-w-md">
+    <dialog id="editSubjectModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-[90%] max-w-md">
         <form action="/?page=admin_subject_update" method="POST" class="p-6">
             <h3 class="text-lg font-bold mb-4">Edit Subject</h3>
             <input type="hidden" name="id" id="edit_id">
@@ -245,7 +235,7 @@ foreach ($teachers_subjects as $ts) {
     </dialog>
 
     <!-- Delete Confirmation Modal -->
-    <dialog id="deleteSubjectModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-full max-w-md">
+    <dialog id="deleteSubjectModal" onclick="if(event.target === this) this.close()" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 dark:bg-slate-800 dark:text-white w-[90%] max-w-md">
         <div class="p-6">
             <div class="flex items-center gap-4 mb-4">
                 <div class="h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
@@ -313,5 +303,8 @@ foreach ($teachers_subjects as $ts) {
             }
         }
     </script>
+        </main>
+        </div>
+    </div>
 </body>
 </html>

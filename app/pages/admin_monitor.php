@@ -75,8 +75,8 @@ $u = current_user();
         <main class="flex-1 flex flex-col relative h-full w-full">
             
             <!-- Floating Overlay for Mobile / Title -->
-            <div class="absolute top-4 left-4 z-[400] bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 max-w-sm transition-colors">
-                <div class="flex justify-between items-start gap-4">
+            <div class="absolute top-4 left-4 z-[40] bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 max-w-sm transition-colors">
+                <div class="flex items-center gap-3">
                     <div>
                         <h1 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                             <span class="relative flex h-3 w-3">
@@ -95,12 +95,14 @@ $u = current_user();
             </div>
 
             <!-- Right Side Controls -->
-            <div class="absolute top-4 right-4 z-[400] bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 transition-colors flex flex-col gap-3">
+            <div class="absolute top-4 right-4 z-[40] bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 transition-colors flex flex-col gap-3">
+                 <!-- Hamburger (Mobile Only) -->
+                 <button onclick="toggleSidebar()" class="md:hidden p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                 </button>
+
                  <!-- Theme Toggle -->
-                 <button onclick="window.toggleTheme()" class="p-2 rounded-lg bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors" title="Toggle Theme">
-                    <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                </button>
+                 <?php include __DIR__ . '/../partials/theme_toggle.php'; ?>
                
                 <!-- Settings Button -->
                 <button onclick="openSettingsModal()" class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors" title="Settings">
@@ -212,6 +214,12 @@ $u = current_user();
             </div>
         </div>
     </div>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div id="mobileSidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden transition-opacity opacity-0"></div>
+
+    <!-- Mobile Script -->
+    <script src="/assets/mobile.js"></script>
 
     <script>
         // Initialize map variables globally

@@ -15,9 +15,9 @@ function iconColor($page_name) {
 }
 ?>
 
-<aside class="w-64 bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 hidden md:flex flex-col border-r border-slate-800 z-20">
+<aside class="w-64 bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 fixed md:static inset-y-0 right-0 z-50 transform translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out border-l md:border-r border-slate-800 shadow-xl md:shadow-none rounded-tl-2xl rounded-bl-2xl md:rounded-none">
     <div class="h-16 flex items-center px-4 border-b border-slate-800 gap-2">
-        <img src="/assets/favicon/web-app-manifest-512x512.png" class="w-7 h-7 rounded-lg" alt="Logo" style="width: 28px; height: 28px;">
+        <img src="/assets/favicon/web-app-manifest-512x512.png" class="w-7 h-7 rounded-lg hidden md:block" alt="Logo" style="width: 28px; height: 28px;">
         <span class="text-base font-bold tracking-tight" style="white-space: nowrap;">FacultyLink <span class="text-blue-500">Admin</span></span>
     </div>
     

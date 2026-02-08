@@ -27,13 +27,13 @@ $error = $_GET['error'] ?? null;
     <link rel="stylesheet" href="/assets/app.css">
     <style>
         .landing-page {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 4rem 2rem;
             position: relative;
-            overflow: hidden;
+            /* overflow: hidden; Removed to prevent clipping on small mobile screens */
         }
 
         .landing-content {
@@ -316,8 +316,32 @@ $error = $_GET['error'] ?? null;
             <div class="loader-square"></div>
             <div class="loader-square"></div>
         </div>
+        <p id="loaderText" class="text-sm font-bold text-white mt-4 hidden tracking-wide uppercase animate-pulse">Signing in...</p>
     </div>
     <script src="/assets/loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('.login-form');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    const loader = document.querySelector('.loader-container');
+                    const text = document.getElementById('loaderText');
+                    
+                    if (loader && text) {
+                        loader.classList.remove('loader-hidden');
+                        text.classList.remove('hidden');
+                        
+                        // Optional: prevents double submission
+                        const btn = form.querySelector('button[type="submit"]');
+                        if (btn) {
+                            btn.disabled = true;
+                            btn.textContent = 'Signing in...';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 
     <!-- Aurora Background -->
     <div class="absolute inset-0 z-0 aurora-bg pointer-events-none"></div>
@@ -391,7 +415,7 @@ $error = $_GET['error'] ?? null;
         </div>
         <div class="footer-bottom">
             <span>&copy; <?= date('Y') ?> FacultyLink. All rights reserved.</span>
-            <span class="opacity-50">Designed for modern educational excellence.</span>
+            <span class="opacity-50">Commisioned and Developed for Group 3 Thesis Project.</span>
         </div>
     </footer>
 </body>
