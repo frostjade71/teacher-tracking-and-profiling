@@ -264,34 +264,31 @@ $teachers = $stmt->fetchAll();
                             <div class="mt-auto pt-5 border-t border-slate-100 dark:border-slate-700/50 relative z-10 flex items-center justify-between">
                                 <?php
                                 $badgeHTML = match($status) {
-                                    'AVAILABLE' => '<div class="flex items-center gap-1.5 bg-emerald-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-emerald-500/20">
-                                        <span class="relative flex h-2 w-2">
-                                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                                          <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                                        </span>
-                                        <span>Available</span>
-                                    </div>',
-                                    'IN_CLASS' => '<div class="flex items-center gap-1.5 bg-amber-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-amber-500/20">
-                                        <div class="w-2 h-2 rounded-full bg-white"></div>
-                                        <span>In Class</span>
-                                    </div>',
-                                    'BUSY' => '<div class="flex items-center gap-1.5 bg-rose-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-rose-500/20">
-                                        <div class="w-2 h-2 rounded-full bg-white"></div>
-                                        <span>Busy</span>
-                                    </div>',
-                                    'OFF_CAMPUS' => '<div class="flex items-center gap-1.5 bg-purple-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-purple-500/20">
-                                        <div class="w-2 h-2 rounded-full bg-white"></div>
-                                        <span>Off Campus</span>
-                                    </div>',
-                                    'OFFLINE' => '<div class="flex items-center gap-1.5 bg-slate-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-slate-500/20">
-                                        <div class="w-2 h-2 rounded-full bg-slate-300"></div>
-                                        <span>Offline</span>
-                                    </div>',
-                                    default => '<div class="flex items-center gap-1.5 bg-gray-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-gray-500/20">
-                                        <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-                                        <span>Unknown</span>
-                                    </div>'
-                                };
+    'AVAILABLE' => '<div class="flex items-center gap-1.5 bg-emerald-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-emerald-500/20">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+        <span>Available</span>
+    </div>',
+    'IN_CLASS' => '<div class="flex items-center gap-1.5 bg-amber-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-amber-500/20">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+        <span>In Class</span>
+    </div>',
+    'BUSY' => '<div class="flex items-center gap-1.5 bg-rose-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-rose-500/20">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>
+        <span>Busy</span>
+    </div>',
+    'OFF_CAMPUS' => '<div class="flex items-center gap-1.5 bg-purple-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-purple-500/20">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>
+        <span>Off Campus</span>
+    </div>',
+    'OFFLINE' => '<div class="flex items-center gap-1.5 bg-slate-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-slate-500/20">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>
+        <span>Offline</span>
+    </div>',
+    default => '<div class="flex items-center gap-1.5 bg-gray-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-gray-500/20">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>
+        <span>Unknown</span>
+    </div>'
+};
                                 echo $badgeHTML;
                                 ?>
 
@@ -328,154 +325,12 @@ $teachers = $stmt->fetchAll();
         </main>
     </div>
 
-    <!-- Live Campus Map Modal -->
-    <dialog id="campusMapModal" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/70 dark:bg-slate-800 w-full max-w-6xl h-[80vh]">
-        <div class="flex flex-col h-full">
-            <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-700">
-                <div class="flex items-center gap-3">
-                    <div class="relative flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Live Campus Map</h3>
-                    <p class="text-xs text-gray-500 dark:text-slate-400">Updates every 10s</p>
-                </div>
-                <button onclick="document.getElementById('campusMapModal').close()" class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            <div id="campusMap" class="flex-1 bg-slate-100 dark:bg-slate-900 relative">
-                <!-- Loading Overlay -->
-                <div id="mapLoader" class="absolute inset-0 bg-white dark:bg-slate-800 flex flex-col items-center justify-center z-50">
-                    <div class="loader">
-                        <div class="loader-square"></div>
-                        <div class="loader-square"></div>
-                        <div class="loader-square"></div>
-                    </div>
-                    <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Loading map...</p>
-                </div>
-            </div>
-        </div>
-    </dialog>
+    <!-- Live Campus Map Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/campus_map_modal.php'; ?>
+
 
     <script>
-    // Campus Map Modal Initialization
-    let campusMapInstance = null;
-    let campusMarkers = {};
-    
-    document.getElementById('campusMapModal').addEventListener('click', function(e) {
-        if (e.target === this) this.close();
-    });
-    
-    document.getElementById('campusMapModal').addEventListener('close', function() {
-        if (campusMapInstance) {
-            campusMapInstance.remove();
-            campusMapInstance = null;
-            campusMarkers = {};
-        }
-        // Reset loader for next open
-        document.getElementById('mapLoader').style.display = 'flex';
-    });
-    
-    const originalShowModal = HTMLDialogElement.prototype.showModal;
-    HTMLDialogElement.prototype.showModal = function() {
-        originalShowModal.call(this);
-        if (this.id === 'campusMapModal' && !campusMapInstance) {
-            setTimeout(() => {
-                campusMapInstance = L.map('campusMap').setView([11.3003, 124.6856], 19);
-                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                }).addTo(campusMapInstance);
-                
-                // Initialize Arrow System
-                campusArrowSystem = new MapArrowSystem(campusMapInstance);
-                
-                // Hide loader when map is ready
-                campusMapInstance.whenReady(() => {
-                    setTimeout(() => {
-                        document.getElementById('mapLoader').style.display = 'none';
-                    }, 500);
-                });
-                
-                // Force map to recalculate size
-                setTimeout(() => {
-                    campusMapInstance.invalidateSize();
-                    updateCampusLocations();
-                }, 100);
-                
-                // Poll every 10 seconds
-                setInterval(updateCampusLocations, 10000);
-            }, 200);
-        }
-    };
-    
-    async function updateCampusLocations() {
-        if (!campusMapInstance) return;
-        
-        try {
-            const response = await fetch('/?page=public_locations_json');
-            const teachers = await response.json();
-            
-            teachers.forEach(t => {
-                const lat = parseFloat(t.lat);
-                const lng = parseFloat(t.lng);
-                
-                if (!lat || !lng) return;
-                
-                let popupContent = `
-                    <div class="min-w-[150px]">
-                        <h3 class="font-bold text-slate-800 text-sm mb-1">${t.name}</h3>
-                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full font-bold shadow-sm">${t.status}</span>
-                        <div class="text-xs text-gray-500 mt-2">
-                            Last: ${t.captured_at}<br>
-                            Acc: ${t.accuracy_m}m
-                        </div>
-                    </div>
-                `;
-                
-                if (campusMarkers[t.id]) {
-                    campusMarkers[t.id].setLatLng([lat, lng]).setPopupContent(popupContent);
-                } else {
-                    // Create Custom Icon
-                    const teacherIcon = L.divIcon({
-                        className: 'custom-map-icon',
-                        html: `<div class="w-10 h-10 bg-blue-600 rounded-full border-2 border-white shadow-lg flex items-center justify-center relative">
-                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                 <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-blue-600"></div>
-                               </div>`,
-                        iconSize: [40, 48],
-                        iconAnchor: [20, 48],
-                        popupAnchor: [0, -48]
-                    });
 
-                    campusMarkers[t.id] = L.marker([lat, lng], {icon: teacherIcon})
-                        .addTo(campusMapInstance)
-                        .bindPopup(popupContent);
-                        
-                    // Add to arrow system
-                    if (campusArrowSystem) {
-                        campusArrowSystem.addMarker(t.id, campusMarkers[t.id]);
-                    }
-                }
-            });
-        } catch (err) {
-            console.error("Failed to fetch locations", err);
-        }
-    }
-    
-    // Auto-open modal if openMap parameter is present
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('openMap') === '1') {
-        // Remove the parameter from URL without reload
-        const newUrl = window.location.pathname + '?page=student_dashboard';
-        window.history.replaceState({}, '', newUrl);
-        
-        // Open modal after a short delay
-        setTimeout(() => {
-            document.getElementById('campusMapModal').showModal();
-        }, 500);
-    }
 
     // Real-time Search Implementation
     document.addEventListener('DOMContentLoaded', function() {

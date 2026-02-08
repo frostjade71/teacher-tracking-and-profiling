@@ -1,6 +1,9 @@
 <?php
 // public/index.php
 
+// Set Timezone to Philippines
+date_default_timezone_set('Asia/Manila');
+
 require __DIR__ . '/../app/config.php';
 require __DIR__ . '/../app/db.php';
 require __DIR__ . '/../app/auth.php';
@@ -16,7 +19,11 @@ $routes = [
     'student_teacher' => __DIR__ . '/../app/pages/student_teacher.php',
     'teacher_dashboard' => __DIR__ . '/../app/pages/teacher_dashboard.php',
     'admin_dashboard' => __DIR__ . '/../app/pages/admin_dashboard.php',
+    'admin_analytics' => __DIR__ . '/../app/pages/admin_analytics.php',
     'admin_monitor' => __DIR__ . '/../app/pages/admin_monitor.php',
+
+    // Logs
+    'log_map_view_post' => __DIR__ . '/../app/actions/log_map_view_post.php',
 
     // Teacher Pages
     'teacher_subjects' => __DIR__ . '/../app/pages/teacher_subjects.php',
@@ -37,11 +44,26 @@ $routes = [
     // Admin API
     'admin_locations_json' => __DIR__ . '/../app/pages/admin_locations_json.php',
     'public_locations_json' => __DIR__ . '/../app/pages/public_locations_json.php',
+    'campus_radar_json' => __DIR__ . '/../app/pages/campus_radar_json.php',
+    'admin_save_radar' => __DIR__ . '/../app/actions/admin_save_radar.php',
+    'admin_campus_radar' => __DIR__ . '/../app/pages/admin_campus_radar.php',
 
     // Admin Pages
     'admin_teachers' => __DIR__ . '/../app/pages/admin_teachers.php',
     'admin_teacher_profile' => __DIR__ . '/../app/pages/admin_teacher_profile.php',
     'admin_audit' => __DIR__ . '/../app/pages/admin_audit.php',
+
+    // Admin Students
+    'admin_students' => __DIR__ . '/../app/pages/admin_students.php',
+    'admin_student_create' => __DIR__ . '/../app/actions/admin_student_create.php',
+    'admin_student_update' => __DIR__ . '/../app/actions/admin_student_update.php',
+    'admin_student_delete' => __DIR__ . '/../app/actions/admin_student_delete.php',
+
+    // Admin Admins
+    'admin_admins' => __DIR__ . '/../app/pages/admin_admins.php',
+    'admin_admin_create' => __DIR__ . '/../app/actions/admin_admin_create.php',
+    'admin_admin_update' => __DIR__ . '/../app/actions/admin_admin_update.php',
+    'admin_admin_delete' => __DIR__ . '/../app/actions/admin_admin_delete.php',
 
     // Admin Actions
     'admin_teacher_create' => __DIR__ . '/../app/actions/admin_teacher_create.php',
@@ -52,7 +74,12 @@ $routes = [
     'admin_subjects' => __DIR__ . '/../app/pages/admin_subjects.php',
     'admin_subject_create' => __DIR__ . '/../app/actions/admin_subject_create.php',
     'admin_subject_update' => __DIR__ . '/../app/actions/admin_subject_update.php',
+    'admin_subject_update' => __DIR__ . '/../app/actions/admin_subject_update.php',
     'admin_subject_delete' => __DIR__ . '/../app/actions/admin_subject_delete.php',
+
+    // Admin Locations
+    'admin_reset_locations' => __DIR__ . '/../app/actions/admin_reset_locations.php',
+    'admin_settings_save' => __DIR__ . '/../app/actions/admin_settings_save.php',
 ];
 
 if (!array_key_exists($page, $routes)) {

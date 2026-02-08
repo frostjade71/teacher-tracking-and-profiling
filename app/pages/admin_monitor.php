@@ -38,6 +38,19 @@ $u = current_user();
         .leaflet-popup-content b { font-size: 1.1em; color: #1e293b; }
         /* Dark mode map filter (optional, experimental) */
         html.dark .leaflet-layer { filter: brightness(0.8) contrast(1.2) grayscale(0.2); }
+        
+        /* Dark Mode Popup Overrides */
+        html.dark .leaflet-popup-content-wrapper,
+        html.dark .leaflet-popup-tip {
+            background-color: #0f172a; /* slate-900 */
+            color: #f8fafc; /* slate-50 */
+            border: 1px solid #334155; /* slate-700 */
+        }
+        html.dark .leaflet-popup-content b { color: #f8fafc; }
+        
+        /* Force remove default Leaflet spacing */
+        .leaflet-popup-content p { margin: 0; }
+        .leaflet-popup-content h3 { margin: 0; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 min-h-screen font-sans text-slate-800 dark:text-white overflow-hidden transition-colors duration-200">
@@ -54,63 +67,9 @@ $u = current_user();
 
     <div class="flex h-screen">
          <!-- Sidebar (Consistent with Dashboard) -->
-         <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 hidden md:flex flex-col z-20 border-r border-slate-800">
-            <div class="h-16 flex items-center px-4 border-b border-slate-800 gap-2">
-                <img src="/assets/favicon/web-app-manifest-512x512.png" class="w-7 h-7 rounded-lg" alt="Logo" style="width: 28px; height: 28px;">
-                <span class="text-base font-bold tracking-tight" style="white-space: nowrap;">FacultyLink <span class="text-blue-500">Admin</span></span>
-            </div>
-            
-            <nav class="flex-1 px-3 py-6 space-y-1">
-                <div class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Main
-                </div>
-                <a href="/?page=admin_dashboard" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                     <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                    Dashboard
-                </a>
-                
-                <a href="/?page=admin_monitor" class="flex items-center px-3 py-2.5 text-sm font-medium bg-blue-600 text-white rounded-lg group">
-                    <svg class="w-5 h-5 mr-3 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0121 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                    Live Campus Map
-                </a>
+         <!-- Sidebar (Shared) -->
+         <?php include __DIR__ . '/../partials/admin_sidebar.php'; ?>
 
-                <div class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider" style="margin-top: 40px;">
-                    Management
-                </div>
-
-                <a href="/?page=admin_teachers" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    Teachers
-                </a>
-                
-                <a href="/?page=admin_subjects" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    Subjects
-                </a>
-
-                <a href="/?page=admin_audit" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    Audit Logs
-                </a>
-            </nav>
-
-             <div class="p-4 border-t border-slate-800">
-                <a href="/?page=profile" class="px-3 mb-4 flex items-center gap-3 hover:bg-slate-800 rounded-lg py-2 transition-colors group">
-                     <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors">
-                        <?= strtoupper(substr($u['name'], 0, 1)) ?>
-                    </div>
-                    <div class="overflow-hidden">
-                         <div class="text-sm font-medium text-white truncate group-hover:text-blue-400 transition-colors"><?= htmlspecialchars($u['name']) ?></div>
-                         <div class="text-xs text-slate-400 truncate">Administrator</div>
-                    </div>
-                </a>
-
-                <a href="/?page=logout_post" class="flex items-center px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Sign Out
-                </a>
-            </div>
-        </aside>
 
         <!-- Main Content (Map) -->
         <main class="flex-1 flex flex-col relative h-full w-full">
@@ -126,16 +85,37 @@ $u = current_user();
                             </span>
                             Live Monitor
                         </h1>
-                        <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Real-time location updates. Markers update every 10s.</p>
+                        <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Real-time location updates. Markers update every 5s.</p>
                     </div>
-                     <!-- Theme Toggle Mini -->
-                     <button onclick="window.toggleTheme()" class="p-1.5 rounded-lg bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">
-                        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
                 </div>
+            </div>
                 
-                <a href="/?page=admin_dashboard" class="md:hidden text-xs text-blue-600 dark:text-blue-400 mt-2 block font-medium">&larr; Back to Dashboard</a>
+            <div class="md:hidden mt-2">
+                <a href="/?page=admin_dashboard" class="text-xs text-blue-600 dark:text-blue-400 font-medium">&larr; Back to Dashboard</a>
+            </div>
+
+            <!-- Right Side Controls -->
+            <div class="absolute top-4 right-4 z-[400] bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 transition-colors flex flex-col gap-3">
+                 <!-- Theme Toggle -->
+                 <button onclick="window.toggleTheme()" class="p-2 rounded-lg bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors" title="Toggle Theme">
+                    <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+               
+                <!-- Settings Button -->
+                <button onclick="openSettingsModal()" class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors" title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
+
+                 <!-- Reset Location Button -->
+                 <button onclick="openResetModal()" class="p-2 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors" title="Reset All Locations">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                </button>
             </div>
 
             <div id="map" class="w-full h-full bg-slate-100 dark:bg-slate-900 relative">
@@ -153,31 +133,155 @@ $u = current_user();
         </main>
     </div>
 
+    <!-- Confirmation Modal -->
+    <div id="resetModal" class="fixed inset-0 z-[500] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity backdrop-blur-sm"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-gray-200 dark:border-slate-700">
+                    <div class="bg-white dark:bg-slate-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30 sm:mx-0 sm:h-10 sm:w-10">
+                                <svg class="h-6 w-6 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white" id="modal-title">Reset All Locations?</h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500 dark:text-slate-300">
+                                        Are you sure you want to remove all teacher locations? This will clear all markers from the live map for everyone. This action cannot be undone.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-slate-700/50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <button type="button" onclick="confirmReset()" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Reset Locations</button>
+                        <button type="button" onclick="closeResetModal()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-slate-800 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 sm:mt-0 sm:w-auto">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 z-[500] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity backdrop-blur-sm"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-gray-200 dark:border-slate-700">
+                    <div class="bg-white dark:bg-slate-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                             <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 sm:mx-0 sm:h-10 sm:w-10">
+                                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white" id="modal-title">Monitor Settings</h3>
+                                <div class="mt-4">
+                                    <label class="block text-sm font-medium leading-6 text-gray-900 dark:text-white mb-2">Detailed Expiration Timer</label>
+                                    <div class="flex gap-2">
+                                        <div class="flex-1">
+                                            <label for="inputHours" class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Hours</label>
+                                            <input type="number" id="inputHours" min="0" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-slate-700 dark:ring-slate-600 dark:text-white px-3" placeholder="0">
+                                        </div>
+                                        <div class="flex-1">
+                                            <label for="inputMinutes" class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Minutes</label>
+                                            <input type="number" id="inputMinutes" min="0" max="59" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-slate-700 dark:ring-slate-600 dark:text-white px-3" placeholder="0">
+                                        </div>
+                                        <div class="flex-1">
+                                            <label for="inputSeconds" class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Seconds</label>
+                                            <input type="number" id="inputSeconds" min="0" max="59" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-slate-700 dark:ring-slate-600 dark:text-white px-3" placeholder="0">
+                                        </div>
+                                    </div>
+                                    <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                                        Teacher will automatically go <strong>OFFLINE</strong> if no activity is detected for this duration.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-slate-700/50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <button type="button" onclick="saveSettings()" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto">Save</button>
+                        <button type="button" onclick="closeSettingsModal()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-slate-800 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 sm:mt-0 sm:w-auto">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Initialize map (Holy Cross College of Carigara)
-        var map = L.map('map').setView([11.3003, 124.6856], 19);
-
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-        
-        // Initialize Arrow System
-        const arrowSystem = new MapArrowSystem(map);
-        
-        // Hide loader when map is ready
-        map.whenReady(() => {
-            setTimeout(() => {
-                document.getElementById('mapLoader').style.display = 'none';
-            }, 500);
-        });
-
+        // Initialize map variables globally
+        var map; 
+        var arrowSystem;
         var markers = {};
 
+        async function initMap() {
+             // Fetch Radar Settings first
+            let campusLat = 11.3003;
+            let campusLng = 124.6856;
+            let radiusMeters = 500;
+
+            try {
+                const res = await fetch('/?page=campus_radar_json');
+                const data = await res.json();
+                if (data.lat && data.lng) {
+                    campusLat = parseFloat(data.lat);
+                    campusLng = parseFloat(data.lng);
+                    radiusMeters = parseFloat(data.radius_meters) || 500;
+                }
+            } catch (e) {
+                console.error("Failed to fetch campus radar settings", e);
+            }
+
+            map = L.map('map').setView([campusLat, campusLng], 19);
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+
+             // Add Radar Circle
+            L.circle([campusLat, campusLng], {
+                color: '#8b5cf6', // purple-500
+                fillColor: '#8b5cf6',
+                fillOpacity: 0.1,
+                radius: radiusMeters,
+                weight: 1
+            }).addTo(map);
+            
+            // Initialize Arrow System
+            if (typeof MapArrowSystem !== 'undefined') {
+                arrowSystem = new MapArrowSystem(map);
+            } else {
+                console.warn("MapArrowSystem not defined");
+            }
+            
+            // Hide loader when map is ready
+            map.whenReady(() => {
+                setTimeout(() => {
+                    document.getElementById('mapLoader').style.display = 'none';
+                }, 500);
+            });
+
+            // Start polling
+            updateLocations();
+            setInterval(updateLocations, 5000);
+        }
+
+        initMap();
+
         async function updateLocations() {
+            if (!map) return; // Wait for map to be initialized
+
             try {
                 const response = await fetch('/?page=admin_locations_json');
                 const teachers = await response.json();
+
+                const seenIds = new Set();
 
                 teachers.forEach(t => {
                     const lat = parseFloat(t.lat);
@@ -185,13 +289,58 @@ $u = current_user();
                     
                     if (!lat || !lng) return;
 
+                    seenIds.add(t.id);
+
+
+                    // Status Badge Logic (mirroring PHP match)
+                    let statusBadge = '';
+                    switch (t.status) {
+                        case 'AVAILABLE':
+                            statusBadge = '<span class="inline-flex items-center gap-1.5 bg-emerald-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm">Available</span>';
+                            break;
+                        case 'IN_CLASS':
+                            statusBadge = '<span class="inline-flex items-center gap-1.5 bg-amber-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm">In Class</span>';
+                            break;
+                            case 'BUSY':
+                            statusBadge = '<span class="inline-flex items-center gap-1.5 bg-rose-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm">Busy</span>';
+                            break;
+                        case 'OFF_CAMPUS':
+                            statusBadge = '<span class="inline-flex items-center gap-1.5 bg-purple-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm">Off Campus</span>';
+                            break;
+                        case 'OFFLINE':
+                            statusBadge = '<span class="inline-flex items-center gap-1.5 bg-slate-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm">Offline</span>';
+                            break;
+                        default:
+                            statusBadge = '<span class="inline-flex items-center gap-1.5 bg-gray-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-sm">Unknown</span>';
+                    }
+
+
+                    // Room badge
+                    let roomBadge = '';
+                    if (t.current_room) {
+                        roomBadge = `
+                            <div class="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-700/50 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-600 shadow-sm">
+                                <svg class="w-3 h-3 text-slate-500 dark:text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <span class="text-[10px] font-extrabold text-slate-700 dark:text-slate-200">${t.current_room}</span>
+                            </div>
+                        `;
+                    }
+
                     let popupContent = `
-                        <div class="min-w-[150px]">
-                            <h3 class="font-bold text-slate-800 text-sm mb-1">${t.name}</h3>
-                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full font-bold shadow-sm">${t.status}</span>
-                            <div class="text-xs text-gray-500 mt-2">
-                                Last: ${t.captured_at}<br>
-                                Acc: ${t.accuracy_m}m
+                        <div class="min-w-[150px] font-sans">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="h-8 w-8 flex-shrink-0 rounded-md bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-300 font-bold text-xs shadow-inner">
+                                    ${t.name.charAt(0).toUpperCase()}
+                                </div>
+                                <div class="flex-1 min-w-0 flex flex-col justify-center">
+                                    <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-none m-0 p-0 truncate">${t.name}</h3>
+                                    <p class="text-[10px] font-medium text-slate-500 dark:text-slate-400 leading-none m-0 p-0 mt-0.5 truncate opacity-90">${t.department || ''}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center gap-2">
+                                ${statusBadge}
+                                ${roomBadge}
                             </div>
                         </div>
                     `;
@@ -201,38 +350,140 @@ $u = current_user();
                         markers[t.id].setLatLng([lat, lng])
                                      .setPopupContent(popupContent);
                     } else {
-                        if (markers[t.id]) {
-                    markers[t.id].setLatLng([lat, lng]).setPopupContent(popupContent);
-                } else {
-                    // Create Custom Icon
-                    const teacherIcon = L.divIcon({
-                        className: 'custom-map-icon',
-                        html: `<div class="w-10 h-10 bg-blue-600 rounded-full border-2 border-white shadow-lg flex items-center justify-center relative">
-                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                 <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-blue-600"></div>
-                               </div>`,
-                        iconSize: [40, 48],
-                        iconAnchor: [20, 48],
-                        popupAnchor: [0, -48]
-                    });
+                        // Create Custom Icon
+                        const teacherIcon = L.divIcon({
+                            className: 'custom-map-icon',
+                            html: `<div class="w-10 h-10 bg-blue-600 rounded-full border-2 border-white shadow-lg flex items-center justify-center relative">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                        <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-blue-600"></div>
+                                    </div>`,
+                            iconSize: [40, 48],
+                            iconAnchor: [20, 48],
+                            popupAnchor: [0, -48]
+                        });
 
-                    markers[t.id] = L.marker([lat, lng], {icon: teacherIcon})
-                        .addTo(map)
-                        .bindPopup(popupContent);
-                        
-                    // Add to arrow system
-                    arrowSystem.addMarker(t.id, markers[t.id]);
-                }    }
+                        markers[t.id] = L.marker([lat, lng], {icon: teacherIcon})
+                            .addTo(map)
+                            .bindPopup(popupContent);
+                            
+                        // Add to arrow system if available
+                        if (arrowSystem) {
+                            arrowSystem.addMarker(t.id, markers[t.id]);
+                        }
+                    }
                 });
+
+                // Remove stale markers
+                for (let id in markers) {
+                    if (!seenIds.has(parseInt(id)) && !seenIds.has(id)) {
+                        map.removeLayer(markers[id]);
+                        if (arrowSystem) arrowSystem.removeMarker(id);
+                        delete markers[id];
+                    }
+                }
 
             } catch (err) {
                 console.error("Failed to fetch locations", err);
             }
         }
 
-        // Poll every 10 seconds
-        updateLocations();
-        setInterval(updateLocations, 10000);
+        // Reset Modal Logic
+        function openResetModal() {
+            document.getElementById('resetModal').classList.remove('hidden');
+        }
+
+        function closeResetModal() {
+            document.getElementById('resetModal').classList.add('hidden');
+        }
+
+        async function confirmReset() {
+            try {
+                const res = await fetch('/?page=admin_reset_locations', {
+                    method: 'POST'
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    // Clear local markers immediately
+                    for (let id in markers) {
+                        map.removeLayer(markers[id]);
+                    }
+                    markers = {};
+                    
+                    // Force update
+                    // updateLocations();
+                    
+                    // closeResetModal();
+                    
+                    // Reload page for fresh map as requested
+                    window.location.reload();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (e) {
+                console.error(e);
+                alert("An error occurred while resetting locations.");
+            }
+        }
+
+        // Settings Modal Logic
+        function openSettingsModal() {
+            <?php 
+            require_once __DIR__ . '/../settings.php';
+            // Default 3 hours = 10800 seconds
+            $totalSeconds = (int)get_setting('location_expiration_seconds', 10800);
+            
+            // Convert to H:M:S
+            $h = floor($totalSeconds / 3600);
+            $m = floor(($totalSeconds % 3600) / 60);
+            $s = $totalSeconds % 60;
+            ?>
+            
+            document.getElementById('inputHours').value = "<?php echo $h; ?>";
+            document.getElementById('inputMinutes').value = "<?php echo $m; ?>";
+            document.getElementById('inputSeconds').value = "<?php echo $s; ?>";
+            
+            document.getElementById('settingsModal').classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
+
+        async function saveSettings() {
+            const h = parseInt(document.getElementById('inputHours').value) || 0;
+            const m = parseInt(document.getElementById('inputMinutes').value) || 0;
+            const s = parseInt(document.getElementById('inputSeconds').value) || 0;
+            
+            const total = (h * 3600) + (m * 60) + s;
+            
+            if (total < 1) {
+                alert("Please set a valid duration (at least 1 second).");
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('hours', h);
+                formData.append('minutes', m);
+                formData.append('seconds', s);
+
+                const res = await fetch('/?page=admin_settings_save', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (e) {
+                console.error(e);
+                alert("An error occurred while saving settings.");
+            }
+        }
     </script>
 </body>
 </html>

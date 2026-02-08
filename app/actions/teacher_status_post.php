@@ -32,6 +32,18 @@ try {
 
     audit_log('STATUS_UPDATE', 'teacher_status_events', $pdo->lastInsertId(), ['status' => $status]);
     
+    // --- Update Location Session Timestamp ---
+    // If they change status, it counts as activity.
+    // We update last_seen_at. We do NOT clear lat/lng because they might still be there.
+    $stmtSession = $pdo->prepare("
+        INSERT INTO location_sessions (teacher_user_id, last_seen_at)
+        VALUES (?, NOW())
+        ON DUPLICATE KEY UPDATE
+            last_seen_at = VALUES(last_seen_at)
+    ");
+    $stmtSession->execute([$u['id']]);
+
+
     echo json_encode([
         'success' => true, 
         'message' => 'Status updated successfully!',

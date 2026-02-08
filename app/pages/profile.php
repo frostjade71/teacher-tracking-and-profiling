@@ -72,12 +72,12 @@ if ($role === 'teacher') {
 
 // Status Config (Same as student_teacher.php)
 $statusConfig = match($status) {
-    'AVAILABLE', 'ACTIVE' => ['bg' => 'bg-emerald-100 dark:bg-emerald-900/30', 'text' => 'text-emerald-800 dark:text-emerald-400', 'border' => 'border-emerald-200 dark:border-emerald-800', 'icon' => '🟢'],
-    'IN_CLASS'   => ['bg' => 'bg-amber-100 dark:bg-amber-900/30', 'text' => 'text-amber-800 dark:text-amber-400', 'border' => 'border-amber-200 dark:border-amber-800', 'icon' => '🟠'],
-    'BUSY'       => ['bg' => 'bg-rose-100 dark:bg-rose-900/30', 'text' => 'text-rose-800 dark:text-rose-400', 'border' => 'border-rose-200 dark:border-rose-800', 'icon' => '🔴'],
-    'OFFLINE'    => ['bg' => 'bg-slate-100 dark:bg-slate-700', 'text' => 'text-slate-600 dark:text-slate-300', 'border' => 'border-slate-200 dark:border-slate-600', 'icon' => '⚫'],
-    'OFF_CAMPUS' => ['bg' => 'bg-purple-100 dark:bg-purple-900/30', 'text' => 'text-purple-800 dark:text-purple-400', 'border' => 'border-purple-200 dark:border-purple-800', 'icon' => '🟣'],
-    default      => ['bg' => 'bg-gray-100 dark:bg-slate-700', 'text' => 'text-gray-800 dark:text-slate-300', 'border' => 'border-gray-200 dark:border-slate-600', 'icon' => '⚪']
+    'AVAILABLE', 'ACTIVE' => ['bg' => 'bg-emerald-500', 'text' => 'text-white', 'border' => 'border-emerald-600', 'icon' => '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>'],
+    'IN_CLASS'   => ['bg' => 'bg-amber-500', 'text' => 'text-white', 'border' => 'border-amber-600', 'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>'],
+    'BUSY'       => ['bg' => 'bg-rose-500', 'text' => 'text-white', 'border' => 'border-rose-600', 'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>'],
+    'OFFLINE'    => ['bg' => 'bg-slate-500', 'text' => 'text-white', 'border' => 'border-slate-600', 'icon' => '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>'],
+    'OFF_CAMPUS' => ['bg' => 'bg-purple-500', 'text' => 'text-white', 'border' => 'border-purple-600', 'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>'],
+    default      => ['bg' => 'bg-gray-500', 'text' => 'text-white', 'border' => 'border-gray-600', 'icon' => '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>']
 };
 
 // Sidebar Logic based on Role
@@ -124,86 +124,70 @@ $dashboard_link = match($role) {
     
     <div class="flex h-screen overflow-hidden">
          <!-- Sidebar -->
-        <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 hidden md:flex flex-col border-r border-slate-800">
-            <div class="h-16 flex items-center px-4 border-b border-slate-800 gap-2">
-                <img src="/assets/favicon/web-app-manifest-512x512.png" class="w-7 h-7 rounded-lg" alt="Logo" style="width: 28px; height: 28px;">
-                <span class="text-base font-bold tracking-tight" style="white-space: nowrap;">FacultyLink <span class="text-blue-500"><?= $sidebar_context ?></span></span>
-            </div>
-            
-            <nav class="flex-1 px-3 py-6 space-y-1">
-                <div class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Main
+        <?php if ($role === 'admin'): ?>
+            <!-- Admin Sidebar (Shared) -->
+            <?php include __DIR__ . '/../partials/admin_sidebar.php'; ?>
+        <?php else: ?>
+            <!-- Sidebar for Teachers/Students -->
+            <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 hidden md:flex flex-col border-r border-slate-800">
+                <div class="h-16 flex items-center px-4 border-b border-slate-800 gap-2">
+                    <img src="/assets/favicon/web-app-manifest-512x512.png" class="w-7 h-7 rounded-lg" alt="Logo" style="width: 28px; height: 28px;">
+                    <span class="text-base font-bold tracking-tight" style="white-space: nowrap;">FacultyLink <span class="text-blue-500"><?= $sidebar_context ?></span></span>
                 </div>
-                <a href="<?= $dashboard_link ?>" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                     <?php if($role === 'admin'): ?>
-                        <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                        Dashboard
-                     <?php elseif($role === 'teacher'): ?>
-                        <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                        Dashboard
-                     <?php else: ?>
-                        <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        Find Faculty
-                     <?php endif; ?>
-                </a>
-
-                <?php if ($role === 'admin'): ?>
-                <a href="/?page=admin_monitor" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                    Live Campus Map
-                </a>
                 
-                <div class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider" style="margin-top: 40px;">Management</div>
-                <a href="/?page=admin_teachers" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                     <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    Teachers
-                </a>
-                <a href="/?page=admin_subjects" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    Subjects
-                </a>
-                <a href="/?page=admin_audit" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                     <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    Audit Logs
-                </a>
-                <?php elseif ($role === 'teacher' || $role === 'student'): 
-                    $mapRedirectPage = ($role === 'teacher') ? 'teacher_dashboard' : 'student_dashboard';
-                ?>
-                <a href="/?page=<?= $mapRedirectPage ?>&openMap=1" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                    Live Campus Map
-                </a>
-                <?php endif; ?>
+                <nav class="flex-1 px-3 py-6 space-y-1">
+                    <div class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        Main
+                    </div>
+                    <a href="<?= $dashboard_link ?>" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                        <?php if($role === 'teacher'): ?>
+                            <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                            Dashboard
+                        <?php else: ?>
+                            <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            Find Faculty
+                        <?php endif; ?>
+                    </a>
 
-                <?php if ($role === 'teacher'): ?>
-                <div class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider" style="margin-top: 40px;">
-                    Management
+                    <?php 
+                        $mapRedirectPage = ($role === 'teacher') ? 'teacher_dashboard' : 'student_dashboard';
+                    ?>
+                    <a href="/?page=<?= $mapRedirectPage ?>&openMap=1" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                        <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                        Live Campus Map
+                    </a>
+
+                    <?php if ($role === 'teacher'): ?>
+                    <div class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider" style="margin-top: 40px;">
+                        Management
+                    </div>
+
+                    <a href="/?page=teacher_subjects" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                        <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        Subjects
+                    </a>
+                    <?php endif; ?>
+                </nav>
+
+                <div class="p-4 border-t border-slate-800">
+                    <a href="/?page=profile" class="px-3 mb-4 flex items-center gap-3 hover:bg-slate-800 rounded-lg py-2 transition-colors group">
+                        <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors">
+                            <?= strtoupper(substr($u['name'], 0, 1)) ?>
+                        </div>
+                        <div class="overflow-hidden">
+                            <div class="text-sm font-medium text-white truncate group-hover:text-blue-400 transition-colors"><?= htmlspecialchars($u['name']) ?></div>
+                            <div class="text-xs text-slate-400 truncate"><?= $sidebar_context ?></div>
+                        </div>
+                    </a>
+
+                    <a href="/?page=logout_post" class="flex items-center px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        Sign Out
+                    </a>
                 </div>
+            </aside>
+        <?php endif; ?>
 
-                <a href="/?page=teacher_subjects" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    Subjects
-                </a>
-                <?php endif; ?>
-            </nav>
-
-            <div class="p-4 border-t border-slate-800">
-                <a href="/?page=profile" class="px-3 mb-4 flex items-center gap-3 hover:bg-slate-800 rounded-lg py-2 transition-colors group">
-                     <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors">
-                        <?= strtoupper(substr($u['name'], 0, 1)) ?>
-                    </div>
-                    <div class="overflow-hidden">
-                         <div class="text-sm font-medium text-white truncate group-hover:text-blue-400 transition-colors"><?= htmlspecialchars($u['name']) ?></div>
-                         <div class="text-xs text-slate-400 truncate"><?= $sidebar_context ?></div>
-                    </div>
-                </a>
-
-                <a href="/?page=logout_post" class="flex items-center px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Sign Out
-                </a>
-            </div>
-        </aside>
 
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto">
@@ -275,9 +259,9 @@ $dashboard_link = match($role) {
                             <?php if ($role === 'teacher'): ?>
                             <!-- Status Badge for Teachers -->
                             <div class="mt-4 md:mt-0 flex flex-col items-end">
-                                <div class="flex items-center space-x-2 px-4 py-2 rounded-full border <?= $statusConfig['bg'] ?> <?= $statusConfig['border'] ?>">
-                                    <span class="text-lg"><?= $statusConfig['icon'] ?></span>
-                                    <span class="font-bold <?= $statusConfig['text'] ?> tracking-wide text-sm"><?= htmlspecialchars($status) ?></span>
+                                <div class="flex items-center space-x-2 px-4 py-2 rounded-full border <?= $statusConfig['bg'] ?> <?= $statusConfig['border'] ?> <?= $statusConfig['text'] ?>">
+                                    <span><?= $statusConfig['icon'] ?></span>
+                                    <span class="font-bold tracking-wide text-sm"><?= htmlspecialchars($status) ?></span>
                                 </div>
                                 <div class="text-xs text-gray-400 dark:text-slate-500 mt-2 font-medium">
                                     Updated: <?= $set_at ? date('M j, g:i a', strtotime($set_at)) : 'N/A' ?>

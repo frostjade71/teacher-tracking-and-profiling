@@ -5,3 +5,4 @@ storage/logs/*.log
 vendor/
 PRD.md
 prd_flow.jpg
+db/
