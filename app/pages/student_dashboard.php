@@ -219,32 +219,44 @@ $teachers = $stmt->fetchAll();
                             
                             <div class="mt-auto pt-5 border-t border-slate-100 dark:border-slate-700/50 relative z-10 flex items-center justify-between">
                                 <?php
-                                $badgeHTML = match($status) {
-    'AVAILABLE' => '<div class="flex items-center gap-1.5 bg-emerald-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-emerald-500/20">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
-        <span>Available</span>
-    </div>',
-    'IN_CLASS' => '<div class="flex items-center gap-1.5 bg-amber-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-amber-500/20">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
-        <span>In Class</span>
-    </div>',
-    'BUSY' => '<div class="flex items-center gap-1.5 bg-rose-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-rose-500/20">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>
-        <span>Busy</span>
-    </div>',
-    'OFF_CAMPUS' => '<div class="flex items-center gap-1.5 bg-purple-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-purple-500/20">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>
-        <span>Off Campus</span>
-    </div>',
-    'OFFLINE' => '<div class="flex items-center gap-1.5 bg-slate-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-slate-500/20">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>
-        <span>Offline</span>
-    </div>',
-    default => '<div class="flex items-center gap-1.5 bg-gray-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-gray-500/20">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>
-        <span>Unknown</span>
-    </div>'
-};
+                                switch($status) {
+                                    case 'AVAILABLE':
+                                        $badgeHTML = '<div class="flex items-center gap-1.5 bg-emerald-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-emerald-500/20">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+                                            <span>Available</span>
+                                        </div>';
+                                        break;
+                                    case 'IN_CLASS':
+                                        $badgeHTML = '<div class="flex items-center gap-1.5 bg-amber-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-amber-500/20">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+                                            <span>In Class</span>
+                                        </div>';
+                                        break;
+                                    case 'BUSY':
+                                        $badgeHTML = '<div class="flex items-center gap-1.5 bg-rose-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-rose-500/20">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>
+                                            <span>Busy</span>
+                                        </div>';
+                                        break;
+                                    case 'OFF_CAMPUS':
+                                        $badgeHTML = '<div class="flex items-center gap-1.5 bg-purple-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-purple-500/20">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>
+                                            <span>Off Campus</span>
+                                        </div>';
+                                        break;
+                                    case 'OFFLINE':
+                                        $badgeHTML = '<div class="flex items-center gap-1.5 bg-slate-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-slate-500/20">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>
+                                            <span>Offline</span>
+                                        </div>';
+                                        break;
+                                    default:
+                                        $badgeHTML = '<div class="flex items-center gap-1.5 bg-gray-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm shadow-gray-500/20">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>
+                                            <span>Unknown</span>
+                                        </div>';
+                                        break;
+                                }
                                 echo $badgeHTML;
                                 ?>
 

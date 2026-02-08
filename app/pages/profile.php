@@ -71,29 +71,58 @@ if ($role === 'teacher') {
 }
 
 // Status Config (Same as student_teacher.php)
-$statusConfig = match($status) {
-    'AVAILABLE', 'ACTIVE' => ['bg' => 'bg-emerald-500', 'text' => 'text-white', 'border' => 'border-emerald-600', 'icon' => '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>'],
-    'IN_CLASS'   => ['bg' => 'bg-amber-500', 'text' => 'text-white', 'border' => 'border-amber-600', 'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>'],
-    'BUSY'       => ['bg' => 'bg-rose-500', 'text' => 'text-white', 'border' => 'border-rose-600', 'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>'],
-    'OFFLINE'    => ['bg' => 'bg-slate-500', 'text' => 'text-white', 'border' => 'border-slate-600', 'icon' => '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>'],
-    'OFF_CAMPUS' => ['bg' => 'bg-purple-500', 'text' => 'text-white', 'border' => 'border-purple-600', 'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>'],
-    default      => ['bg' => 'bg-gray-500', 'text' => 'text-white', 'border' => 'border-gray-600', 'icon' => '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>']
-};
+switch($status) {
+    case 'AVAILABLE':
+    case 'ACTIVE':
+        $statusConfig = ['bg' => 'bg-emerald-500', 'text' => 'text-white', 'border' => 'border-emerald-600', 'icon' => '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>'];
+        break;
+    case 'IN_CLASS':
+        $statusConfig = ['bg' => 'bg-amber-500', 'text' => 'text-white', 'border' => 'border-amber-600', 'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>'];
+        break;
+    case 'BUSY':
+        $statusConfig = ['bg' => 'bg-rose-500', 'text' => 'text-white', 'border' => 'border-rose-600', 'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>'];
+        break;
+    case 'OFFLINE':
+        $statusConfig = ['bg' => 'bg-slate-500', 'text' => 'text-white', 'border' => 'border-slate-600', 'icon' => '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>'];
+        break;
+    case 'OFF_CAMPUS':
+        $statusConfig = ['bg' => 'bg-purple-500', 'text' => 'text-white', 'border' => 'border-purple-600', 'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>'];
+        break;
+    default:
+        $statusConfig = ['bg' => 'bg-gray-500', 'text' => 'text-white', 'border' => 'border-gray-600', 'icon' => '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/></svg>'];
+        break;
+}
 
 // Sidebar Logic based on Role
-$sidebar_context = match($role) {
-    'admin' => 'Admin',
-    'student' => 'Student',
-    'teacher' => 'Staff',
-    default => 'User'
-};
+switch($role) {
+    case 'admin':
+        $sidebar_context = 'Admin';
+        break;
+    case 'student':
+        $sidebar_context = 'Student';
+        break;
+    case 'teacher':
+        $sidebar_context = 'Staff';
+        break;
+    default:
+        $sidebar_context = 'User';
+        break;
+}
 
-$dashboard_link = match($role) {
-    'admin' => url('?page=admin_dashboard'),
-    'student' => url('?page=student_dashboard'),
-    'teacher' => url('?page=teacher_dashboard'),
-    default => url()
-};
+switch($role) {
+    case 'admin':
+        $dashboard_link = url('?page=admin_dashboard');
+        break;
+    case 'student':
+        $dashboard_link = url('?page=student_dashboard');
+        break;
+    case 'teacher':
+        $dashboard_link = url('?page=teacher_dashboard');
+        break;
+    default:
+        $dashboard_link = url();
+        break;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

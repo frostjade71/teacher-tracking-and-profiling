@@ -54,14 +54,26 @@ $stmtNote->execute([$teacher_id]);
 $latestNote = $stmtNote->fetch();
 $note = $latestNote['note'] ?? '';
 
-$statusConfig = match($status) {
-    'AVAILABLE'  => ['bg' => 'bg-emerald-100 dark:bg-emerald-900/30', 'text' => 'text-emerald-800 dark:text-emerald-400', 'border' => 'border-emerald-200 dark:border-emerald-800', 'icon' => '🟢'],
-    'IN_CLASS'   => ['bg' => 'bg-amber-100 dark:bg-amber-900/30', 'text' => 'text-amber-800 dark:text-amber-400', 'border' => 'border-amber-200 dark:border-amber-800', 'icon' => '🟠'],
-    'BUSY'       => ['bg' => 'bg-rose-100 dark:bg-rose-900/30', 'text' => 'text-rose-800 dark:text-rose-400', 'border' => 'border-rose-200 dark:border-rose-800', 'icon' => '🔴'],
-    'OFFLINE'    => ['bg' => 'bg-slate-100 dark:bg-slate-700', 'text' => 'text-slate-600 dark:text-slate-300', 'border' => 'border-slate-200 dark:border-slate-600', 'icon' => '⚫'],
-    'OFF_CAMPUS' => ['bg' => 'bg-purple-100 dark:bg-purple-900/30', 'text' => 'text-purple-800 dark:text-purple-400', 'border' => 'border-purple-200 dark:border-purple-800', 'icon' => '🟣'],
-    default      => ['bg' => 'bg-gray-100 dark:bg-slate-700', 'text' => 'text-gray-800 dark:text-slate-300', 'border' => 'border-gray-200 dark:border-slate-600', 'icon' => '⚪']
-};
+switch($status) {
+    case 'AVAILABLE':
+        $statusConfig = ['bg' => 'bg-emerald-100 dark:bg-emerald-900/30', 'text' => 'text-emerald-800 dark:text-emerald-400', 'border' => 'border-emerald-200 dark:border-emerald-800', 'icon' => '🟢'];
+        break;
+    case 'IN_CLASS':
+        $statusConfig = ['bg' => 'bg-amber-100 dark:bg-amber-900/30', 'text' => 'text-amber-800 dark:text-amber-400', 'border' => 'border-amber-200 dark:border-amber-800', 'icon' => '🟠'];
+        break;
+    case 'BUSY':
+        $statusConfig = ['bg' => 'bg-rose-100 dark:bg-rose-900/30', 'text' => 'text-rose-800 dark:text-rose-400', 'border' => 'border-rose-200 dark:border-rose-800', 'icon' => '🔴'];
+        break;
+    case 'OFFLINE':
+        $statusConfig = ['bg' => 'bg-slate-100 dark:bg-slate-700', 'text' => 'text-slate-600 dark:text-slate-300', 'border' => 'border-slate-200 dark:border-slate-600', 'icon' => '⚫'];
+        break;
+    case 'OFF_CAMPUS':
+        $statusConfig = ['bg' => 'bg-purple-100 dark:bg-purple-900/30', 'text' => 'text-purple-800 dark:text-purple-400', 'border' => 'border-purple-200 dark:border-purple-800', 'icon' => '🟣'];
+        break;
+    default:
+        $statusConfig = ['bg' => 'bg-gray-100 dark:bg-slate-700', 'text' => 'text-gray-800 dark:text-slate-300', 'border' => 'border-gray-200 dark:border-slate-600', 'icon' => '⚪'];
+        break;
+}
 
 $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
 ?>
