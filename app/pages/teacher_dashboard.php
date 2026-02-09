@@ -304,7 +304,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
     </dialog>
 
     <!-- Quick Update Modal -->
-    <dialog id="quickUpdateModal" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/70 dark:bg-slate-800 w-full max-w-md overflow-hidden">
+    <dialog id="quickUpdateModal" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/70 dark:bg-slate-800 w-[92%] sm:max-w-sm overflow-hidden">
         <div class="relative bg-white dark:bg-slate-800">
             <!-- Header -->
             <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-700">
@@ -315,23 +315,23 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
             </div>
 
             <!-- Modal Content Container -->
-            <div id="modalContent" class="relative overflow-hidden" style="min-height: 350px;">
+            <div id="modalContent" class="relative overflow-hidden" style="min-height: 280px;">
                 
                 <!-- Step 1: In a Class? -->
-                <div id="step1" class="modal-step absolute inset-0 p-6">
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-6 text-center">In a Class?</h4>
+                <div id="step1" class="modal-step absolute inset-0 p-4 sm:p-6">
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4 text-center">In a Class?</h4>
                     <div class="grid grid-cols-2 gap-4">
-                        <button onclick="handleInClass(true)" class="p-6 rounded-lg border-2 border-green-200 dark:border-green-800 bg-white dark:bg-slate-900 text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 hover:shadow-lg transition-all font-bold text-lg">
+                        <button onclick="handleInClass(true)" class="p-5 sm:p-6 rounded-lg border-2 border-green-200 dark:border-green-800 bg-white dark:bg-slate-900 text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 hover:shadow-lg transition-all font-bold text-lg">
                             Yes
                         </button>
-                        <button onclick="handleInClass(false)" class="p-6 rounded-lg border-2 border-red-200 dark:border-red-800 bg-white dark:bg-slate-900 text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg transition-all font-bold text-lg">
+                        <button onclick="handleInClass(false)" class="p-5 sm:p-6 rounded-lg border-2 border-red-200 dark:border-red-800 bg-white dark:bg-slate-900 text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:shadow-lg transition-all font-bold text-lg">
                             No
                         </button>
                     </div>
                 </div>
 
                 <!-- Step 2a: Room Number (if in class) -->
-                <div id="step2a" class="modal-step absolute inset-0 p-6 hidden">
+                <div id="step2a" class="modal-step absolute inset-0 p-4 sm:p-6 hidden">
                     <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Room #?</h4>
                     <input type="text" id="quickRoomNumber" placeholder="Enter room number" class="w-full p-3 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-white placeholder-gray-400 dark:placeholder-slate-600 mb-4">
                     <button onclick="handleRoomNumber()" class="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
@@ -340,7 +340,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
                 </div>
 
                 <!-- Step 2b: Subject Selection (if in class) -->
-                <div id="step2b" class="modal-step absolute inset-0 p-6 hidden">
+                <div id="step2b" class="modal-step absolute inset-0 p-4 sm:p-6 hidden">
                     <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Subject?</h4>
                     <input type="text" id="quickSubjectSearch" placeholder="Search your subjects..." class="w-full p-3 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-white placeholder-gray-400 dark:placeholder-slate-600 mb-3">
                     <div id="quickSubjectList" class="max-h-64 overflow-y-auto space-y-2">
@@ -349,18 +349,18 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
                 </div>
 
                 <!-- Step 3a: Status Selection (if NOT in class) -->
-                <div id="step3a" class="modal-step absolute inset-0 p-6 hidden">
+                <div id="step3a" class="modal-step absolute inset-0 p-4 sm:p-6 hidden">
                     <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Your Status?</h4>
                     <div class="space-y-3">
-                        <button onclick="handleStatusChoice('AVAILABLE')" class="w-full p-4 rounded-lg border-2 border-emerald-200 dark:border-emerald-800 bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:shadow-lg transition-all font-medium text-left flex items-center gap-3">
+                        <button onclick="handleStatusChoice('AVAILABLE')" class="w-full p-3 sm:p-4 rounded-lg border-2 border-emerald-200 dark:border-emerald-800 bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:shadow-lg transition-all font-medium text-left flex items-center gap-3">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
                             Available
                         </button>
-                        <button onclick="handleStatusChoice('BUSY')" class="w-full p-4 rounded-lg border-2 border-rose-200 dark:border-rose-800 bg-white dark:bg-slate-900 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:shadow-lg transition-all font-medium text-left flex items-center gap-3">
+                        <button onclick="handleStatusChoice('BUSY')" class="w-full p-3 sm:p-4 rounded-lg border-2 border-rose-200 dark:border-rose-800 bg-white dark:bg-slate-900 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:shadow-lg transition-all font-medium text-left flex items-center gap-3">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>
                             Busy
                         </button>
-                        <button onclick="handleStatusChoice('OFF_CAMPUS')" class="w-full p-4 rounded-lg border-2 border-purple-200 dark:border-purple-800 bg-white dark:bg-slate-900 text-purple-700 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:shadow-lg transition-all font-medium text-left flex items-center gap-3">
+                        <button onclick="handleStatusChoice('OFF_CAMPUS')" class="w-full p-3 sm:p-4 rounded-lg border-2 border-purple-200 dark:border-purple-800 bg-white dark:bg-slate-900 text-purple-700 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:shadow-lg transition-all font-medium text-left flex items-center gap-3">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>
                             Off Campus
                         </button>
@@ -368,7 +368,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
                 </div>
 
                 <!-- Step 3b: Add Note (optional) -->
-                <div id="step3b" class="modal-step absolute inset-0 p-6 hidden">
+                <div id="step3b" class="modal-step absolute inset-0 p-4 sm:p-6 hidden">
                     <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Add a Note?</h4>
                     <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">Optional - leave blank to skip</p>
                     <input type="text" id="quickNoteInput" placeholder="e.g., 'Back in office at 2:30 PM'" class="w-full p-3 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-white placeholder-gray-400 dark:placeholder-slate-600 mb-4">
@@ -383,7 +383,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
                 </div>
 
                 <!-- Step 3c: Note Duration -->
-                <div id="step3c" class="modal-step absolute inset-0 p-6 hidden">
+                <div id="step3c" class="modal-step absolute inset-0 p-4 sm:p-6 hidden">
                     <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Remove Note until?</h4>
                     <div class="space-y-2">
                         <button onclick="handleNoteDuration(5)" class="w-full p-3 text-left rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors font-medium">For 5 Minutes</button>
@@ -396,7 +396,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
                 </div>
 
                 <!-- Step 4: Loading/Processing -->
-                <div id="step4" class="modal-step absolute inset-0 p-6 hidden">
+                <div id="step4" class="modal-step absolute inset-0 p-4 sm:p-6 hidden">
                     <div class="flex flex-col items-center justify-center py-8">
                         <div class="loader mb-4">
                             <div class="loader-square"></div>
@@ -1178,7 +1178,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
             
             // Step 4: Update Location
             loadingText.textContent = 'Updating Location...';
-            await updateQuickLocation();
+            await updateQuickLocation(quickUpdateData.inClass);
             
             // Done
             loadingText.textContent = 'Done!';
@@ -1248,7 +1248,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
     }
 
     // Update location via GPS
-    async function updateQuickLocation() {
+    async function updateQuickLocation(skipRoomClear = false) {
         return new Promise((resolve, reject) => {
             if (!navigator.geolocation) {
                 reject(new Error('Geolocation not supported'));
@@ -1267,7 +1267,8 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
                         const payload = {
                             lat: pos.coords.latitude,
                             lng: pos.coords.longitude,
-                            accuracy_m: pos.coords.accuracy
+                            accuracy_m: pos.coords.accuracy,
+                            skip_room_clear: skipRoomClear
                         };
                         
                         const res = await fetch('<?= url("?page=teacher_location_post") ?>', {

@@ -158,7 +158,7 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
                     <!-- Header Banner -->
                     <div class="h-32 bg-slate-900 dark:bg-slate-950 w-full relative">
                         <div class="absolute -bottom-10 left-8">
-                             <div class="h-24 w-24 rounded-2xl bg-white dark:bg-slate-800 p-1 shadow-md">
+                             <div class="h-24 w-24 rounded-2xl bg-white dark:bg-slate-800 p-1 shadow-md flex-shrink-0">
                                  <div class="w-full h-full bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center text-3xl font-bold text-slate-400 dark:text-slate-300">
                                     <?= strtoupper(substr($teacher['name'], 0, 1)) ?>
                                  </div>

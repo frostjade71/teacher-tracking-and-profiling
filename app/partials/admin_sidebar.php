@@ -77,7 +77,7 @@ function iconColor($page_name) {
 
      <div class="p-4 border-t border-slate-800">
         <a href="<?= url('?page=profile') ?>" class="px-3 mb-4 flex items-center gap-3 hover:bg-slate-800 rounded-lg py-2 transition-colors group">
-             <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors">
+             <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors flex-shrink-0">
                 <?= strtoupper(substr($u['name'], 0, 1)) ?>
             </div>
             <div class="overflow-hidden">

@@ -200,7 +200,7 @@ switch($role) {
 
                 <div class="p-4 border-t border-slate-800">
                     <a href="<?= url('?page=profile') ?>" class="px-3 mb-4 flex items-center gap-3 hover:bg-slate-800 rounded-lg py-2 transition-colors group">
-                        <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors">
+                        <div class="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors flex-shrink-0">
                             <?= strtoupper(substr($u['name'], 0, 1)) ?>
                         </div>
                         <div class="overflow-hidden">
@@ -252,7 +252,7 @@ switch($role) {
                     <!-- Header Banner -->
                     <div class="h-32 bg-slate-900 dark:bg-slate-950 w-full relative">
                         <div class="absolute -bottom-10 left-8">
-                             <div class="h-24 w-24 rounded-2xl bg-white dark:bg-slate-800 p-1 shadow-md">
+                             <div class="h-24 w-24 rounded-2xl bg-white dark:bg-slate-800 p-1 shadow-md flex-shrink-0">
                                  <div class="w-full h-full bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center text-3xl font-bold text-slate-400 dark:text-slate-300">
                                     <?= strtoupper(substr($u['name'], 0, 1)) ?>
                                  </div>
