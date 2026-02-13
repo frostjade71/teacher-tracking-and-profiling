@@ -49,6 +49,11 @@ function iconColor($page_name) {
             Campus Radar
         </a>
 
+        <a href="<?= url('?page=admin_timetable') ?>" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg group transition-colors <?= isActive('admin_timetable') ?>">
+            <svg class="w-5 h-5 mr-3 <?= iconColor('admin_timetable') ?>" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            Timetable
+        </a>
+
         <a href="<?= url('?page=admin_teachers') ?>" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg group transition-colors <?= isActive('admin_teachers') ?>">
             <svg class="w-5 h-5 mr-3 <?= iconColor('admin_teachers') ?>" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             Teachers

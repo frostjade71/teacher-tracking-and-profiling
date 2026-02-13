@@ -51,7 +51,19 @@ foreach ($allSubjects as $subj) {
     <script src="<?= url('assets/theme.js') ?>"></script>
     <link rel="stylesheet" href="<?= url('assets/toast.css') ?>">
     <script src="<?= url('assets/toast.js') ?>"></script>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="<?= url('assets/map_arrows.js') ?>"></script>
+
     <style>
+        #campusMap { height: 100%; width: 100%; z-index: 1; }
+        .leaflet-popup-content-wrapper { border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .leaflet-popup-content b { font-size: 1.1em; color: #1e293b; }
+        html.dark .leaflet-layer { filter: brightness(0.8) contrast(1.2) grayscale(0.2); }
+
         .draggable-item {
             cursor: grab;
             user-select: none;
@@ -391,6 +403,9 @@ foreach ($allSubjects as $subj) {
             }
         }
     </script>
+    <!-- Live Campus Map Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/campus_map_modal.php'; ?>
+
     <script src="<?= url('assets/mobile.js') ?>"></script>
 </body>
 </html>

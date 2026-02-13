@@ -19,16 +19,15 @@ $set_at = null;
 $current_subject = null;
 
 if ($role === 'teacher') {
-    // Fetch Teacher Profile Info
     $stmt = $pdo->prepare("SELECT * FROM teacher_profiles WHERE teacher_user_id = ?");
     $stmt->execute([$user_id]);
-    $tp = $stmt->fetch();
+    $profile = $stmt->fetch();
 
-    if ($tp) {
-        $department = $tp['department'] ?? 'General Faculty';
-        $office_text = $tp['office_text'] ?? 'Main Office';
-        $current_subject = $tp['current_subject'] ?? null;
-        $subjects = json_decode($tp['subjects_json'] ?? '[]', true);
+    if ($profile) {
+        $department = $profile['department'] ?? 'General Faculty';
+        $office_text = $profile['office_text'] ?? 'Main Office';
+        $current_subject = $profile['current_subject'] ?? null;
+        $subjects = json_decode($profile['subjects_json'] ?? '[]', true);
     } else {
         $department = 'Teacher (Profile Not Setup)';
     }
@@ -48,7 +47,6 @@ if ($role === 'teacher') {
     $status = $latestStatus['status'] ?? 'UNKNOWN';
     $set_at = $latestStatus['set_at'] ?? null;
 
-    // Fetch Teacher Note
     $stmtNote = $pdo->prepare("
         SELECT note 
         FROM teacher_notes 
@@ -60,6 +58,21 @@ if ($role === 'teacher') {
     $stmtNote->execute([$user_id]);
     $latestNote = $stmtNote->fetch();
     $note = $latestNote['note'] ?? '';
+
+    // Fetch Timetable Data for Embedding
+    $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    $stmt = $pdo->prepare("SELECT * FROM teacher_timetables WHERE teacher_user_id = ? ORDER BY day, start_time");
+    $stmt->execute([$user_id]);
+    $timetableEntries = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $schedule = [];
+    foreach ($timetableEntries as $entry) {
+        $schedule[$entry['day']][$entry['start_time']] = $entry;
+    }
+
+    $stmt = $pdo->prepare("SELECT DISTINCT start_time, end_time FROM teacher_timetables WHERE teacher_user_id = ? ORDER BY start_time ASC");
+    $stmt->execute([$user_id]);
+    $timeSlots = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } elseif ($role === 'admin') {
     $department = 'Administrator';
     $office_text = 'Admin Office';
@@ -138,6 +151,75 @@ switch($role) {
     <link rel="manifest" href="<?= url('assets/favicon/site.webmanifest') ?>" />
     <link rel="stylesheet" href="<?= url('assets/app.css') ?>">
     <script src="<?= url('assets/theme.js') ?>"></script>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="<?= url('assets/map_arrows.js') ?>"></script>
+
+    <style>
+        #campusMap { height: 100%; width: 100%; z-index: 1; }
+        .leaflet-popup-content-wrapper { border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .leaflet-popup-content b { font-size: 1.1em; color: #1e293b; }
+        html.dark .leaflet-layer { filter: brightness(0.8) contrast(1.2) grayscale(0.2); }
+
+        /* Timetable Styles */
+        .timetable-grid { 
+            display: grid; 
+            grid-template-columns: 80px repeat(5, 1fr) 0px; 
+            width: 100%; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 1px solid #e2e8f0; 
+            background-color: #f1f5f9;
+            gap: 1px;
+        }
+        html.dark .timetable-grid { border-color: #334155; background-color: #1e293b; }
+
+        .grid-header { 
+            background-color: #f8fafc; 
+            padding: 0.75rem; 
+            text-align: center; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            color: #64748b; 
+            border-bottom: 1px solid #e2e8f0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 50px; 
+        }
+        html.dark .grid-header { background-color: #1e293b; color: #94a3b8; border-color: #334155; }
+
+        .grid-time { 
+            background-color: #f1f5f9; 
+            padding: 0.75rem; 
+            text-align: center; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            color: #64748b; 
+            border-right: 1px solid #e2e8f0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        html.dark .grid-time { background-color: #0f172a; color: #94a3b8; border-color: #334155; }
+
+        .grid-cell { 
+            min-height: 80px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 0.5rem; 
+            background-color: #ffffff;
+            border-bottom: 1px solid #f1f5f9; 
+            position: relative; 
+        }
+        html.dark .grid-cell { background-color: #1e293b; border-color: #334155; }
+    </style>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-200 font-sans text-slate-800 dark:text-slate-200">
     
@@ -191,6 +273,11 @@ switch($role) {
                         Management
                     </div>
 
+                    <a href="<?= url('?page=teacher_timetable') ?>" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                        <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        Timetable
+                    </a>
+
                     <a href="<?= url('?page=teacher_subjects') ?>" class="flex items-center px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
                         <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                         Subjects
@@ -205,7 +292,7 @@ switch($role) {
                         </div>
                         <div class="overflow-hidden">
                             <div class="text-sm font-medium text-white truncate group-hover:text-blue-400 transition-colors"><?= htmlspecialchars($u['name']) ?></div>
-                            <div class="text-xs text-slate-400 truncate"><?= $sidebar_context ?></div>
+                            <div class="text-xs text-slate-400 truncate"><?= $role === 'teacher' ? 'Teacher' : $sidebar_context ?></div>
                         </div>
                     </a>
 
@@ -283,12 +370,12 @@ switch($role) {
                             
                             <?php if ($role === 'teacher'): ?>
                             <!-- Status Badge for Teachers -->
-                            <div class="mt-4 md:mt-0 flex flex-col items-end">
+                            <div class="mt-4 md:mt-0 flex flex-col items-end gap-3">
                                 <div class="flex items-center space-x-2 px-4 py-2 rounded-full border <?= $statusConfig['bg'] ?> <?= $statusConfig['border'] ?> <?= $statusConfig['text'] ?>">
                                     <span><?= $statusConfig['icon'] ?></span>
                                     <span class="font-bold tracking-wide text-sm"><?= htmlspecialchars($status) ?></span>
                                 </div>
-                                <div class="text-xs text-gray-400 dark:text-slate-500 mt-2 font-medium">
+                                <div class="text-xs text-gray-400 dark:text-slate-500 font-medium">
                                     Updated: <?= $set_at ? date('M j, g:i a', strtotime($set_at)) : 'N/A' ?>
                                 </div>
                             </div>
@@ -359,8 +446,33 @@ switch($role) {
                     </div>
                 </div>
 
+                <!-- Timetable Section for Teachers -->
+                <?php if ($role === 'teacher' && !empty($timeSlots)): ?>
+                <div class="mt-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden transition-colors p-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <?= htmlspecialchars(explode(' ', $u['name'])[0]) ?>'s Timetable
+                        </h3>
+                        <a href="<?= url('?page=teacher_timetable') ?>" class="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline">Edit Full Timetable &rarr;</a>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner bg-slate-50 dark:bg-slate-900/50">
+                        <div class="min-w-[800px] p-4 dark:bg-[#1e293b]">
+                            <?php 
+                                $readonly = true;
+                                include __DIR__ . '/../partials/teacher_timetable_grid.php'; 
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+
             </div>
         </main>
     </div>
+    <!-- Live Campus Map Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/campus_map_modal.php'; ?>
+
 </body>
 </html>

@@ -28,6 +28,8 @@ $routes = [
     // Teacher Pages
     'teacher_subjects' => __DIR__ . '/../app/pages/teacher_subjects.php',
     'teacher_subjects_api' => __DIR__ . '/../app/pages/teacher_subjects_api.php',
+    'teacher_timetable' => __DIR__ . '/../app/pages/teacher_timetable.php',
+    'teacher_timetable_action' => __DIR__ . '/../app/pages/teacher_timetable_action.php',
 
     // Generic Pages
     'profile' => __DIR__ . '/../app/pages/profile.php',
@@ -52,6 +54,8 @@ $routes = [
     'admin_teachers' => __DIR__ . '/../app/pages/admin_teachers.php',
     'admin_teacher_profile' => __DIR__ . '/../app/pages/admin_teacher_profile.php',
     'admin_audit' => __DIR__ . '/../app/pages/admin_audit.php',
+    'admin_timetable' => __DIR__ . '/../app/pages/admin_timetable.php',
+    'admin_timetable_action' => __DIR__ . '/../app/actions/admin_timetable_action.php',
 
     // Admin Students
     'admin_students' => __DIR__ . '/../app/pages/admin_students.php',
@@ -74,12 +78,14 @@ $routes = [
     'admin_subjects' => __DIR__ . '/../app/pages/admin_subjects.php',
     'admin_subject_create' => __DIR__ . '/../app/actions/admin_subject_create.php',
     'admin_subject_update' => __DIR__ . '/../app/actions/admin_subject_update.php',
-    'admin_subject_update' => __DIR__ . '/../app/actions/admin_subject_update.php',
+
     'admin_subject_delete' => __DIR__ . '/../app/actions/admin_subject_delete.php',
 
     // Admin Locations
     'admin_reset_locations' => __DIR__ . '/../app/actions/admin_reset_locations.php',
     'admin_settings_save' => __DIR__ . '/../app/actions/admin_settings_save.php',
+    'migrate_timetables' => __DIR__ . '/../app/actions/migrate_timetables.php',
+    'migrate_time_labels' => __DIR__ . '/../app/actions/migrate_time_labels.php',
 ];
 
 if (!array_key_exists($page, $routes)) {

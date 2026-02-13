@@ -7,6 +7,10 @@ require_role('teacher');
 $u = current_user();
 $pdo = db();
 
+// Trigger auto-offline check logic (same as map)
+require_once __DIR__ . '/../actions/auto_offline_helper.php';
+check_and_process_expirations();
+
 // Get current status
 $stmt = $pdo->prepare("
     SELECT status

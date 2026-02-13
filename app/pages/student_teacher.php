@@ -10,6 +10,10 @@ if (!$teacher_id) {
 }
 
 $pdo = db();
+
+// Trigger auto-offline check logic (same as map)
+require_once __DIR__ . '/../actions/auto_offline_helper.php';
+check_and_process_expirations();
 $stmt = $pdo->prepare("
     SELECT 
         u.id, u.name, u.email, 
@@ -53,6 +57,21 @@ $stmtNote = $pdo->prepare("
 $stmtNote->execute([$teacher_id]);
 $latestNote = $stmtNote->fetch();
 $note = $latestNote['note'] ?? '';
+
+// Fetch Timetable Data for Embedding
+$days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+$stmt = $pdo->prepare("SELECT * FROM teacher_timetables WHERE teacher_user_id = ? ORDER BY day, start_time");
+$stmt->execute([$teacher_id]);
+$timetableEntries = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$schedule = [];
+foreach ($timetableEntries as $entry) {
+    $schedule[$entry['day']][$entry['start_time']] = $entry;
+}
+
+$stmt = $pdo->prepare("SELECT DISTINCT start_time, end_time FROM teacher_timetables WHERE teacher_user_id = ? ORDER BY start_time ASC");
+$stmt->execute([$teacher_id]);
+$timeSlots = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 switch($status) {
     case 'AVAILABLE':
@@ -103,6 +122,62 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
         .leaflet-popup-content-wrapper { border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
         .leaflet-popup-content b { font-size: 1.1em; color: #1e293b; }
         html.dark .leaflet-layer { filter: brightness(0.8) contrast(1.2) grayscale(0.2); }
+
+        /* Timetable Styles */
+        .timetable-grid { 
+            display: grid; 
+            grid-template-columns: 80px repeat(5, 1fr) 0px; 
+            width: 100%; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 1px solid #e2e8f0; 
+            background-color: #f1f5f9;
+            gap: 1px;
+        }
+        html.dark .timetable-grid { border-color: #334155; background-color: #1e293b; }
+
+        .grid-header { 
+            background-color: #f8fafc; 
+            padding: 0.75rem; 
+            text-align: center; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            color: #64748b; 
+            border-bottom: 1px solid #e2e8f0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 50px; 
+        }
+        html.dark .grid-header { background-color: #1e293b; color: #94a3b8; border-color: #334155; }
+
+        .grid-time { 
+            background-color: #f1f5f9; 
+            padding: 0.75rem; 
+            text-align: center; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            color: #64748b; 
+            border-right: 1px solid #e2e8f0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        html.dark .grid-time { background-color: #0f172a; color: #94a3b8; border-color: #334155; }
+
+        .grid-cell { 
+            min-height: 80px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 0.5rem; 
+            background-color: #ffffff;
+            border-bottom: 1px solid #f1f5f9; 
+            position: relative; 
+        }
+        html.dark .grid-cell { background-color: #1e293b; border-color: #334155; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-200 font-sans text-slate-800 dark:text-slate-200">
@@ -259,6 +334,29 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
 
                     </div>
                 </div>
+
+                <!-- Timetable Section -->
+                <?php if (!empty($timeSlots)): ?>
+                <div class="mt-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden transition-colors p-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <?= htmlspecialchars(explode(' ', $teacher['name'])[0]) ?>'s Timetable
+                        </h3>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-gray-100 dark:border-slate-700 shadow-inner bg-slate-50 dark:bg-slate-900/50">
+                        <div class="min-w-[800px] p-4 dark:bg-[#1e293b]">
+                            <?php 
+                                $readonly = true;
+                                $profile = $teacher; // Use retrieved teacher profile data
+                                include __DIR__ . '/../partials/teacher_timetable_grid.php'; 
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+
                 <?php endif; ?>
 
             </div>

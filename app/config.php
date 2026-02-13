@@ -2,13 +2,10 @@
 // app/config.php
 
 define('APP_NAME', 'Teacher Tracking System');
-// detect if we are on localhost
-if (isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false)) {
-    define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST']);
-} else {
-    // Hardcoded production URL for reliability
-    define('BASE_URL', 'https://wh1494404.ispot.cc/Facultylink');
-}
+// Detect BASE_URL dynamically
+$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+define('BASE_URL', $protocol . "://" . $host);
 
 /**
  * Get full URL for a page or asset
@@ -46,9 +43,9 @@ function redirect($page) {
 // Database Config (match docker-compose env)
 // Database Config
 define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_NAME', getenv('DB_NAME') ?: 'frostjad_facultylinkv1');
-define('DB_USER', getenv('DB_USER') ?: 'frostjad_facultylinkv1');
-define('DB_PASS', getenv('DB_PASS') ?: 'hpBv7GgtVFMdVfT2ZG5K');
+define('DB_NAME', getenv('DB_NAME') ?: 'frostjad_facultylinkdb');
+define('DB_USER', getenv('DB_USER') ?: 'frostjad_facultylinkdb');
+define('DB_PASS', getenv('DB_PASS') ?: 'kvFJrLN5rBEJAXqHmHpA');
 
 // Error Reporting
 error_reporting(E_ALL);

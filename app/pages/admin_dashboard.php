@@ -8,6 +8,10 @@ $u = current_user();
 
 // Fetch Total Faculty Count
 $pdo = db();
+
+// Trigger auto-offline check logic (same as map)
+require_once __DIR__ . '/../actions/auto_offline_helper.php';
+check_and_process_expirations();
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE role = 'teacher' AND is_active = 1");
 $stmt->execute();
 $totalFaculty = $stmt->fetchColumn();

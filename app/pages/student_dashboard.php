@@ -7,6 +7,10 @@ require_role('student');
 $search = $_GET['search'] ?? '';
 $pdo = db();
 
+// Trigger auto-offline check logic (same as map)
+require_once __DIR__ . '/../actions/auto_offline_helper.php';
+check_and_process_expirations();
+
 // Query teachers and their *latest* status
 $sql = "
 SELECT 

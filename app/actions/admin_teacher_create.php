@@ -53,6 +53,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ");
     $stmt->execute([$new_user_id, $employee_no, $department, $subjects_json, $office_text]);
 
+    // Seed empty timetable slots (Dynamic from system defaults)
+    $stmt = $pdo->query("SELECT start_time, end_time FROM system_default_timetable_rows ORDER BY start_time ASC");
+    $defaultRows = $stmt->fetchAll();
+
+    if (empty($defaultRows)) {
+        // Fallback to basic 7AM-6PM if no defaults configured
+        for ($h = 7; $h < 19; $h++) {
+            $defaultRows[] = ['start_time' => sprintf("%02d:00:00", $h), 'end_time' => sprintf("%02d:00:00", $h + 1)];
+        }
+    }
+
+    $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    $sql = "INSERT INTO teacher_timetables (teacher_user_id, day, start_time, end_time, subject_text, room_text) VALUES (?, ?, ?, ?, '', '')";
+    $insertSlot = $pdo->prepare($sql);
+
+    foreach ($days as $day) {
+        foreach ($defaultRows as $row) {
+            $insertSlot->execute([$new_user_id, $day, $row['start_time'], $row['end_time']]);
+        }
+    }
+
     audit_log('create_teacher', 'user', $new_user_id, ['name' => $name, 'email' => $email]);
 
     redirect('admin_teachers');

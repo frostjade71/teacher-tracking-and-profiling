@@ -420,7 +420,7 @@ $error = $_GET['error'] ?? null;
         </div>
         <div class="footer-bottom">
             <span>&copy; <?= date('Y') ?> FacultyLink. All rights reserved.</span>
-            <span class="opacity-50">Commisioned and Developed for Group 3 Thesis Project.</span>
+            <span class="opacity-50">Commisioned and Developed for Group 1 Thesis Project.</span>
         </div>
     </footer>
     <script>
