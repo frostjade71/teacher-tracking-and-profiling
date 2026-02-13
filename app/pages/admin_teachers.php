@@ -65,6 +65,8 @@ $subjects = $stmt->fetchAll();
                 <div class="flex items-center text-sm text-slate-700 dark:text-slate-300 font-semibold">
                     <span>Admin</span>
                     <span class="mx-2 text-slate-400">/</span>
+                    <a href="<?= url('?page=admin_users') ?>" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">User Management</a>
+                    <span class="mx-2 text-slate-400">/</span>
                     <span class="text-slate-900 dark:text-white">Teachers</span>
                 </div>
                 <div class="flex items-center gap-4">

@@ -58,6 +58,7 @@ $routes = [
     'admin_timetable_action' => __DIR__ . '/../app/actions/admin_timetable_action.php',
 
     // Admin Students
+    'admin_users' => __DIR__ . '/../app/pages/admin_users.php',
     'admin_students' => __DIR__ . '/../app/pages/admin_students.php',
     'admin_student_create' => __DIR__ . '/../app/actions/admin_student_create.php',
     'admin_student_update' => __DIR__ . '/../app/actions/admin_student_update.php',

@@ -787,6 +787,12 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
             return;
         }
 
+        // Check for secure context
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+            msg.innerHTML = '<span class="text-rose-500">Error: Location requires HTTPS.</span>';
+            return;
+        }
+
         msg.textContent = 'Locating...';
         
         // Fetch Campus Radar Settings
@@ -936,7 +942,13 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
             }
 
         }, (err) => {
-            msg.textContent = 'Error: ' + err.message;
+            let errorMessage = err.message;
+            if (errorMessage.includes("secure origin") || errorMessage.includes("secure context")) {
+                errorMessage = "Location access requires HTTPS.";
+            } else if (err.code === 1) { // PERMISSION_DENIED
+                errorMessage = "Location permission denied.";
+            }
+            msg.textContent = 'Error: ' + errorMessage;
         }, {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -1258,6 +1270,11 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
                 reject(new Error('Geolocation not supported'));
                 return;
             }
+
+            if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+                reject(new Error('Location requires HTTPS connection'));
+                return;
+            }
             
             const options = {
                 enableHighAccuracy: true,
@@ -1290,7 +1307,13 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
                     }
                 },
                 (err) => {
-                    reject(new Error('Could not get location'));
+                    let errorMessage = err.message;
+                    if (errorMessage.includes("secure origin")) {
+                         errorMessage = "Location requires HTTPS";
+                    } else if (err.code === 1) {
+                         errorMessage = "Location permission denied";
+                    }
+                    reject(new Error(errorMessage));
                 },
                 options
             );
