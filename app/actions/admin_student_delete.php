@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
     $stmt->execute([$id]);
 
-    audit_log('delete_student', 'user', $id, ['name' => $student['name']]);
+    audit_log('DELETE STUDENT', 'user', $id, ['name' => $student['name']]);
 
     redirect('admin_students');
 }

@@ -1,12 +1,12 @@
 services:
   nginx:
     image: nginx:1.25-alpine
-    ports: ["8080:80"]
+    ports: [ "8080:80" ]
     volumes:
       - ./public:/var/www/public:ro
       - ./app:/var/www/app:ro
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-    depends_on: [php]
+    depends_on: [ php ]
     networks:
       - ttrack-network
 
@@ -18,20 +18,21 @@ services:
       - ./storage:/var/www/storage
     environment:
       DB_HOST: mysql
-      DB_NAME: ttrack
-      DB_USER: ttrack_user
-      DB_PASS: ttrack_pass
-    depends_on: [mysql]
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      PERPLEXITY_API_KEY: ${PERPLEXITY_API_KEY}
+    depends_on: [ mysql ]
     networks:
       - ttrack-network
 
   mysql:
     image: mysql:8.0
     environment:
-      MYSQL_DATABASE: ttrack
-      MYSQL_USER: ttrack_user
-      MYSQL_PASSWORD: ttrack_pass
-      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - dbdata:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
@@ -42,15 +43,16 @@ services:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: mysql
-      PMA_USER: ttrack_user
-      PMA_PASSWORD: ttrack_pass
-    ports: ["8081:80"]
-    depends_on: [mysql]
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASS}
+    ports: [ "8081:80" ]
+    depends_on: [ mysql ]
     networks:
       - ttrack-network
 
 volumes:
   dbdata:
+
 
 networks:
   ttrack-network:

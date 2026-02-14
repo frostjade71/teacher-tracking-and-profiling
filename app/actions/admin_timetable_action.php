@@ -27,7 +27,7 @@ try {
         $stmt = $pdo->prepare("INSERT INTO system_default_timetable_rows (start_time, end_time) VALUES (?, ?)");
         $stmt->execute([$startTime, $endTime]);
 
-        audit_log('create_default_timetable_row', 'system', $pdo->lastInsertId(), ['start' => $startTime, 'end' => $endTime]);
+        audit_log('CREATE DEFAULT TIMETABLE ROW', 'system', $pdo->lastInsertId(), ['start' => $startTime, 'end' => $endTime]);
         echo json_encode(['success' => true]);
 
     } elseif ($action === 'update') {
@@ -43,7 +43,7 @@ try {
         $stmt = $pdo->prepare("UPDATE system_default_timetable_rows SET start_time = ?, end_time = ? WHERE id = ?");
         $stmt->execute([$startTime, $endTime, $id]);
 
-        audit_log('update_default_timetable_row', 'system', $id, ['start' => $startTime, 'end' => $endTime]);
+        audit_log('UPDATE DEFAULT TIMETABLE ROW', 'system', $id, ['start' => $startTime, 'end' => $endTime]);
         echo json_encode(['success' => true]);
 
     } elseif ($action === 'delete') {
@@ -57,7 +57,7 @@ try {
         $stmt = $pdo->prepare("DELETE FROM system_default_timetable_rows WHERE id = ?");
         $stmt->execute([$id]);
 
-        audit_log('delete_default_timetable_row', 'system', $id);
+        audit_log('DELETE DEFAULT TIMETABLE ROW', 'system', $id);
         echo json_encode(['success' => true]);
 
     } else {

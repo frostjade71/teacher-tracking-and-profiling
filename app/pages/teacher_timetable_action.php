@@ -115,7 +115,7 @@ try {
         $stmt = $pdo->prepare("UPDATE teacher_timetables SET start_time = ?, end_time = ? WHERE teacher_user_id = ? AND start_time = ?");
         $stmt->execute([$newStart, $newEnd, $u['id'], $oldStart]);
 
-        audit_log('edit_timetable_row_time', 'user', $u['id'], ['old' => $oldStart, 'new_start' => $newStart, 'new_end' => $newEnd]);
+        audit_log('EDIT TIMETABLE', 'user', $u['id'], ['old' => $oldStart, 'new_start' => $newStart, 'new_end' => $newEnd]);
         jsonResponse(true, 'Time range updated.');
 
     } elseif ($action === 'delete_row') {
@@ -125,7 +125,7 @@ try {
         $stmt = $pdo->prepare("DELETE FROM teacher_timetables WHERE teacher_user_id = ? AND start_time = ?");
         $stmt->execute([$u['id'], $time]);
 
-        audit_log('delete_timetable_row', 'user', $u['id'], ['time' => $time]);
+        audit_log('DELETE TIMETABLE ROW', 'user', $u['id'], ['time' => $time]);
         jsonResponse(true, 'Row deleted.');
 
     } elseif ($action === 'add_row') {
@@ -152,7 +152,7 @@ try {
             $insert->execute([$u['id'], $day, $startTime, $endTime]);
         }
 
-        audit_log('add_timetable_row', 'user', $u['id'], ['time' => $startTime]);
+        audit_log('ADD TIMETABLE ROW', 'user', $u['id'], ['time' => $startTime]);
         jsonResponse(true, 'Row added.');
 
     } elseif ($action === 'reset_to_default') {
@@ -181,7 +181,7 @@ try {
             }
         }
 
-        audit_log('reset_timetable_to_default', 'user', $u['id']);
+        audit_log('RESET TIMETABLE', 'user', $u['id']);
         jsonResponse(true, 'Timetable reset to defaults.');
 
     } else {

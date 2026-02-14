@@ -4,6 +4,9 @@
 // Set Timezone to Philippines
 date_default_timezone_set('Asia/Manila');
 
+require __DIR__ . '/../app/helpers/env_loader.php';
+loadEnv(__DIR__ . '/../.env');
+
 require __DIR__ . '/../app/config.php';
 require __DIR__ . '/../app/db.php';
 require __DIR__ . '/../app/auth.php';
@@ -49,6 +52,10 @@ $routes = [
     'campus_radar_json' => __DIR__ . '/../app/pages/campus_radar_json.php',
     'admin_save_radar' => __DIR__ . '/../app/actions/admin_save_radar.php',
     'admin_campus_radar' => __DIR__ . '/../app/pages/admin_campus_radar.php',
+    
+    // Student Chatbot API
+    'chatbot_api' => __DIR__ . '/../app/pages/chatbot_api.php',
+
 
     // Admin Pages
     'admin_teachers' => __DIR__ . '/../app/pages/admin_teachers.php',

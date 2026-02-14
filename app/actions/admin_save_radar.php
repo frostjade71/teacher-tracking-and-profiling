@@ -24,6 +24,7 @@ try {
     set_setting('campus_center_lng', $lng);
     set_setting('campus_radius_meters', $rad);
     
+    audit_log('SAVE RADAR CONFIG', 'system', null, ['lat' => $lat, 'lng' => $lng, 'radius' => $rad]);
     echo json_encode(['success' => true, 'message' => 'Campus Radar settings saved successfully.']);
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => 'Error saving settings: ' . $e->getMessage()]);

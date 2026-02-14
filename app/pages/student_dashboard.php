@@ -375,5 +375,8 @@ $teachers = $stmt->fetchAll();
     });
     </script>
     <script src="<?= url('assets/mobile.js') ?>"></script>
+    
+    <!-- Chatbot Widget -->
+    <?php include __DIR__ . '/../partials/chatbot_widget.php'; ?>
 </body>
 </html>

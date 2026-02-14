@@ -37,6 +37,7 @@ try {
         $stmt->execute([$u['id'], $subjectsJson]);
     }
 
+    audit_log('SAVE TEACHER SUBJECT', 'user', $u['id'], ['count' => count($subjects)]);
     echo json_encode(['success' => true, 'message' => 'Subjects updated successfully']);
 
 } catch (PDOException $e) {

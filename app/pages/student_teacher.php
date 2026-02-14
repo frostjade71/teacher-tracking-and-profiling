@@ -372,5 +372,8 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
 
     </script>
     <script src="<?= url('assets/mobile.js') ?>"></script>
+    
+    <!-- Chatbot Widget -->
+    <?php include __DIR__ . '/../partials/chatbot_widget.php'; ?>
 </body>
 </html>

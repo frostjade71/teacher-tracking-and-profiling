@@ -6,3 +6,6 @@ vendor/
 PRD.md
 prd_flow.jpg
 db/
+
+# Sensitive App Config
+app/config.php

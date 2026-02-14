@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$id, $employee_no, $department, $subjects_json, $office_text]);
     }
 
-    audit_log('update_teacher', 'user', $id, ['name' => $name, 'email' => $email, 'password_changed' => !empty($password)]);
+    audit_log('UPDATE TEACHER', 'user', $id, ['name' => $name, 'email' => $email, 'password_changed' => !empty($password)]);
 
     redirect('admin_teachers');
 }

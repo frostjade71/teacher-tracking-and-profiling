@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    audit_log('create_teacher', 'user', $new_user_id, ['name' => $name, 'email' => $email]);
+    audit_log('CREATE TEACHER', 'user', $new_user_id, ['name' => $name, 'email' => $email]);
 
     redirect('admin_teachers');
 }

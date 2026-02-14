@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$hashed, $id]);
     }
 
-    audit_log('update_student', 'user', $id, ['name' => $name, 'email' => $email]);
+    audit_log('UPDATE STUDENT', 'user', $id, ['name' => $name, 'email' => $email]);
 
     redirect('admin_students');
 }

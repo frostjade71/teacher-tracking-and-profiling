@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$name, $email, $id]);
     }
 
-    audit_log('update_admin', 'user', $id, ['name' => $name, 'email' => $email, 'password_changed' => !empty($password)]);
+    audit_log('UPDATE ADMIN', 'user', $id, ['name' => $name, 'email' => $email, 'password_changed' => !empty($password)]);
 
     redirect('admin_admins');
 }

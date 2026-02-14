@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("DELETE FROM users WHERE id = ? AND role = 'teacher'");
     $stmt->execute([$id]);
 
-    audit_log('delete_teacher', 'user', $id, []);
+    audit_log('DELETE TEACHER', 'user', $id, []);
 
     redirect('admin_teachers');
 }

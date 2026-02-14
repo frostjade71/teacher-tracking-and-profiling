@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $new_user_id = $pdo->lastInsertId();
 
-    audit_log('create_admin', 'user', $new_user_id, ['name' => $name, 'email' => $email]);
+    audit_log('CREATE ADMIN', 'user', $new_user_id, ['name' => $name, 'email' => $email]);
 
     redirect('admin_admins');
 }
