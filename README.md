@@ -21,29 +21,30 @@ The system enforces a **"Status-Only"** policy for students allowing them to see
 
 ## Key Features
 
-### Student Access
+### <img src="public/images/linky.webp" width="35" style="vertical-align: middle;"> "LinkyBot" AI Assistant
+- **Smart Assistance**: An integrated AI chatbot (powered by Perplexity) to help students find teachers, check room schedules, and get status updates instantly.
+- **Context Awareness**: Remembers recent queries and offers "follow-up" capabilities.
 
-![Web Screenshot](<public/images/web-screenshot-06-02-2026%20(1).png>)
+### Student Access
+![Web Screenshot](<public/images/web-screenshot-06-02-2026 (1).png>)
 
 - **Privacy-First Design**: View teacher status (e.g., Available, In Class) without exposing location data.
 - **Search & Filter**: Quickly find teachers by name or department.
 - **Real-Time Updates**: See the most recent status timestamps.
 
 ### Teacher Portal
-
-![Web Screenshot](<public/images/web-screenshot-06-02-2026%20(2).png>)
+![Web Screenshot](<public/images/web-screenshot-06-02-2026 (2).png>)
 
 - **Status Management**: Update current availability (Available, In Class, Busy, Offline, Off Campus).
 - **GPS Location Pings**: Securely submit current location using browser geolocation APIs.
 - **Profile Management**: Maintain professional details and subject lists.
+- **Timetable Management**: Add and manage courses directly in the schedule.
 
 ### Admin Console
 
-![Web Screenshot](<public/images/web-screenshot-06-02-2026%20(3).png>)
-
 - **Interactive Map Monitor**: Visualize teacher locations in real-time using Leaflet maps.
 - **Audit Logging**: Comprehensive logs of all privileged actions and location history.
-- **User Management**: Full control over student and teacher accounts.
+- **Student & Teacher Management**: Full control over student and teacher accounts with a centralized interface.
 - **Analytics**: Generate reports on faculty attendance and availability history.
 
 ## Quick Start
@@ -57,13 +58,21 @@ The system enforces a **"Status-Only"** policy for students allowing them to see
    cd teacher-tracking-and-profiling
    ```
 
-2. **Start the application**
+2. **Configure Environment**
+
+   Copy `.env.example` to `.env` and configure your API keys:
+   ```bash
+   cp .env.example .env
+   ```
+   *You may need to add your `PERPLEXITY_API_KEY` for the chatbot functionality.*
+
+3. **Start the application**
 
    ```bash
    docker-compose up -d --build
    ```
 
-3. **Access the System**
+4. **Access the System**
    - **Web Interface**: `http://localhost:8080`
    - **Database**: `http://localhost:3306` (or configured port)
 
@@ -78,7 +87,9 @@ The system enforces a **"Status-Only"** policy for students allowing them to see
 - **Backend**: Vanilla PHP 8+ (No heavy frameworks)
 - **Database**: MySQL 8.0
 - **Frontend**: HTML5, Tailwind CSS, JavaScript
+- **AI Integration**: Perplexity API
 - **Mapping**: Leaflet.js (OpenStreetMap)
+- **Drag & Drop**: interact.js
 - **Infrastructure**: Docker & Docker Compose
 
 ## Configuration
@@ -121,6 +132,10 @@ Contributions are welcome!
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+**Copyright (c) 2026 Jaderby Peñaranda. All Rights Reserved.**
+
+This software is a commissioned work depending on proprietary and confidential information. Permission is hereby granted to the client/student to use this software solely for the purpose of academic requirements and thesis defense.
+
+See the [LICENSE](LICENSE) file for full details.
 
 ---
