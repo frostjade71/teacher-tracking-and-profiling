@@ -1,0 +1,27 @@
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Default: 4 hours cache for everything
+    ExpiresDefault "access plus 4 hours"
+    
+    # Explicitly set 4 hours (14400 seconds) for common types
+    ExpiresByType text/html "access plus 4 hours"
+    ExpiresByType text/css "access plus 4 hours"
+    ExpiresByType application/javascript "access plus 4 hours"
+    ExpiresByType application/x-javascript "access plus 4 hours"
+    ExpiresByType image/x-icon "access plus 4 hours"
+    ExpiresByType image/vnd.microsoft.icon "access plus 4 hours"
+    ExpiresByType image/jpeg "access plus 4 hours"
+    ExpiresByType image/png "access plus 4 hours"
+    ExpiresByType image/gif "access plus 4 hours"
+    ExpiresByType image/webp "access plus 4 hours"
+    ExpiresByType image/svg+xml "access plus 4 hours"
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Set Cache-Control for all content (4 hours = 14400 seconds)
+    # This includes PHP, HTML, and assets
+    <FilesMatch "\.(php|html|htm|css|js|jpg|jpeg|png|gif|ico|webp|svg)$">
+        Header set Cache-Control "max-age=14400, public, must-revalidate"
+    </FilesMatch>
+</IfModule>

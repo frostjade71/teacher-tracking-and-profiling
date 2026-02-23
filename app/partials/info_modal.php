@@ -36,7 +36,7 @@
                         <span class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-500 border-4 border-white dark:border-slate-800 shadow-sm"></span>
                         <div class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-tighter mb-1">Feb 23, 2026</div>
                         <h4 class="text-sm font-bold text-slate-800 dark:text-white">Update v0.6.0alpha: Modal Integration & Bug Fixes</h4>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Integrated Information Modal across 15+ pages, implemented safety checks in theme toggle for system stability, and optimized the live monitor interface.</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Added System Information Modal and new Teacher Directory for Admin.</p>
                     </div>
                     <!-- Commit 2 -->
                     <div class="relative">
@@ -56,14 +56,14 @@
                     <div class="relative">
                         <span class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-500 border-4 border-white dark:border-slate-800 shadow-sm"></span>
                         <div class="text-xs font-bold text-blue-400 dark:text-slate-500 uppercase tracking-tighter mb-1">Feb 13, 2026</div>
-                        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300">Update v0.4beta: enhance user management and fix loader issues</h4>
+                        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300">Update v0.4beta: Enhance user management and fix loader issues</h4>
                         <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Implemented persistent loader fix for navigation and added User Profile Modal in Admin Users page for quick detail access.</p>
                     </div>
                     <!-- Commit 5 -->
                     <div class="relative">
                         <span class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-500/50 border-4 border-white dark:border-slate-800 shadow-sm"></span>
                         <div class="text-xs font-bold text-blue-400 dark:text-slate-500 uppercase tracking-tighter mb-1">Feb 11, 2026</div>
-                        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300">Update v0.35: implement teacher timetable and fixed auto-offline</h4>
+                        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300">Update v0.35beta: Added teacher timetable and fixed auto-offline</h4>
                         <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Foundational teacher timetable management and resolved automatic offline status issues for better accuracy.</p>
                     </div>
                 </div>
