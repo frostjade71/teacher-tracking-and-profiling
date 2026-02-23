@@ -35,6 +35,11 @@ function iconColor($page_name) {
             Analytics
         </a>
         
+        <a href="<?= url('?page=admin_teachers_view') ?>" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg group transition-colors <?= isActive('admin_teachers_view') ?>">
+             <svg class="w-5 h-5 mr-3 <?= iconColor('admin_teachers_view') ?>" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            Teachers
+        </a>
+        
         <a href="<?= url('?page=admin_monitor') ?>" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg group transition-colors <?= isActive('admin_monitor') ?>">
             <svg class="w-5 h-5 mr-3 <?= iconColor('admin_monitor') ?>" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0121 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
             Live Campus Map

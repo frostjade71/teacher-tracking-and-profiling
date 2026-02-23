@@ -474,5 +474,7 @@ switch($role) {
     <!-- Live Campus Map Modal (Shared) -->
     <?php include __DIR__ . '/../partials/campus_map_modal.php'; ?>
 
+    <!-- Information Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/info_modal.php'; ?>
 </body>
 </html>

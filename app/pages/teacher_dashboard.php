@@ -1329,5 +1329,7 @@ $config = $statusConfig[$currentStatus] ?? $defaultConfig;
     <?php endif; ?>
     </script>
     <script src="<?= url('assets/mobile.js') ?>"></script>
+    <!-- Information Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/info_modal.php'; ?>
 </body>
 </html>

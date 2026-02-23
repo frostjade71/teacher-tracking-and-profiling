@@ -2,7 +2,11 @@
 // app/pages/student_teacher.php
 
 require_login();
-require_role('student');
+if (!has_role('student') && !has_role('admin')) {
+    http_response_code(403);
+    echo "403 Forbidden: Access denied.";
+    exit;
+}
 
 $teacher_id = $_GET['id'] ?? null;
 if (!$teacher_id) {
@@ -11,16 +15,19 @@ if (!$teacher_id) {
 
 $pdo = db();
 
-// Trigger auto-offline check logic (same as map)
 require_once __DIR__ . '/../actions/auto_offline_helper.php';
 check_and_process_expirations();
+
+$is_admin = has_role('admin');
+$sidebar_path = $is_admin ? '/../partials/admin_sidebar.php' : '/../partials/student_sidebar.php';
+$header_path = $is_admin ? '/../partials/admin_mobile_header.php' : '/../partials/student_mobile_header.php';
 $stmt = $pdo->prepare("
     SELECT 
         u.id, u.name, u.email, 
         tp.employee_no, tp.department, tp.office_text, tp.current_subject, tp.subjects_json
     FROM users u
     LEFT JOIN teacher_profiles tp ON u.id = tp.teacher_user_id
-    WHERE u.id = ? AND u.role = 'teacher' AND u.is_active = 1
+    WHERE u.id = ? AND u.role = 'teacher' 
 ");
 $stmt->execute([$teacher_id]);
 $teacher = $stmt->fetch();
@@ -195,18 +202,20 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
     <div class="flex h-screen overflow-hidden">
 
          <!-- Sidebar (Shared) -->
-         <?php include __DIR__ . '/../partials/student_sidebar.php'; ?>
+         <?php include __DIR__ . $sidebar_path; ?>
 
         <!-- Wrapper -->
         <div class="flex-1 flex flex-col min-w-0">
              <!-- Header for Mobile -->
-             <?php include __DIR__ . '/../partials/student_mobile_header.php'; ?>
+             <?php include __DIR__ . $header_path; ?>
 
 
             <!-- Desktop Header -->
             <div class="hidden md:flex bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 h-16 items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-200">
                  <div class="text-sm text-slate-700 dark:text-slate-300 font-semibold flex items-center gap-2">
-                    <a href="<?= url('?page=student_dashboard') ?>" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Find Faculty</a>
+                    <a href="<?= url($is_admin ? '?page=admin_teachers_view' : '?page=student_dashboard') ?>" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        <?= $is_admin ? 'Teachers' : 'Find Faculty' ?>
+                    </a>
                     <span class="text-slate-400">/</span>
                     <span class="text-slate-900 dark:text-white">Profile View</span>
                 </div>
@@ -223,11 +232,11 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
             <div class="p-4 md:p-8 max-w-5xl mx-auto">
                 
                 <!-- Back Button -->
-                <a href="<?= url('?page=student_dashboard') ?>" class="inline-flex items-center text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white mb-6 transition-colors group">
+                <a href="<?= url($is_admin ? '?page=admin_teachers_view' : '?page=student_dashboard') ?>" class="inline-flex items-center text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white mb-6 transition-colors group">
                     <div class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center mr-2 group-hover:scale-110 transition-transform border border-gray-200 dark:border-slate-700">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     </div>
-                    <span class="font-medium text-sm">Back to Dashboard</span>
+                    <span class="font-medium text-sm">Back</span>
                 </a>
 
                 <?php if (!$teacher): ?>
@@ -267,7 +276,7 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
                                 </div>
                             </div>
                             <!-- Status Badge -->
-                            <div class="mt-4 md:mt-0 flex flex-col items-end">
+                            <div class="mt-4 md:mt-0 flex flex-col items-start md:items-end">
                                 <div class="flex items-center space-x-2 px-4 py-2 rounded-full border <?= $statusConfig['bg'] ?> <?= $statusConfig['border'] ?> <?= $statusConfig['text'] ?>">
                                     <span><?= $statusConfig['icon'] ?></span>
                                     <span class="font-bold tracking-wide text-sm"><?= htmlspecialchars($status) ?></span>
@@ -375,5 +384,7 @@ $subjects = json_decode($teacher['subjects_json'] ?? '[]', true);
     
     <!-- Chatbot Widget -->
     <?php include __DIR__ . '/../partials/chatbot_widget.php'; ?>
+    <!-- Information Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/info_modal.php'; ?>
 </body>
 </html>

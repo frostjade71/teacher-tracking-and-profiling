@@ -285,5 +285,7 @@ $admins = $stmt->fetchAll();
             }
         }
     </script>
+    <!-- Information Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/info_modal.php'; ?>
 </body>
 </html>

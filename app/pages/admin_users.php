@@ -90,26 +90,26 @@ $users = $stmt->fetchAll();
                 </div>
                 
                 <!-- Action Buttons -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                    <a href="<?= url('?page=admin_students') ?>" class="flex items-center justify-center gap-2 p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all group">
+                <div class="grid grid-cols-3 gap-2 md:gap-4 mb-8">
+                    <a href="<?= url('?page=admin_students') ?>" class="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 p-2 md:p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all group">
                          <div class="text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                          </div>
-                         <div class="font-semibold text-slate-700 dark:text-slate-200">Manage Students</div>
+                         <div class="font-bold text-[10px] md:text-sm text-slate-700 dark:text-slate-200 text-center">Students</div>
                     </a>
                     
-                    <a href="<?= url('?page=admin_teachers') ?>" class="flex items-center justify-center gap-2 p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl hover:shadow-md hover:border-indigo-500 dark:hover:border-indigo-500 transition-all group">
+                    <a href="<?= url('?page=admin_teachers') ?>" class="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 p-2 md:p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl hover:shadow-md hover:border-indigo-500 dark:hover:border-indigo-500 transition-all group">
                          <div class="text-indigo-600 dark:text-indigo-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                          </div>
-                         <div class="font-semibold text-slate-700 dark:text-slate-200">Manage Teachers</div>
+                         <div class="font-bold text-[10px] md:text-sm text-slate-700 dark:text-slate-200 text-center">Teachers</div>
                     </a>
                     
-                    <a href="<?= url('?page=admin_admins') ?>" class="flex items-center justify-center gap-2 p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl hover:shadow-md hover:border-amber-500 dark:hover:border-amber-500 transition-all group">
+                    <a href="<?= url('?page=admin_admins') ?>" class="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 p-2 md:p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl hover:shadow-md hover:border-amber-500 dark:hover:border-amber-500 transition-all group">
                          <div class="text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                          </div>
-                         <div class="font-semibold text-slate-700 dark:text-slate-200">Manage Admins</div>
+                         <div class="font-bold text-[10px] md:text-sm text-slate-700 dark:text-slate-200 text-center">Admins</div>
                     </a>
                 </div>
 
@@ -355,5 +355,7 @@ $users = $stmt->fetchAll();
             }
         }
     </script>
+    <!-- Information Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/info_modal.php'; ?>
 </body>
 </html>

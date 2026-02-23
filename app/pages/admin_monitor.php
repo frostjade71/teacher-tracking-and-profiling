@@ -102,7 +102,7 @@ $u = current_user();
                  </button>
 
                  <!-- Theme Toggle -->
-                 <?php include __DIR__ . '/../partials/theme_toggle.php'; ?>
+                 <?php $hideInfoIcon = true; include __DIR__ . '/../partials/theme_toggle.php'; ?>
                
                 <!-- Settings Button -->
                 <button onclick="openSettingsModal()" class="w-10 h-10 flex items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors" title="Settings">

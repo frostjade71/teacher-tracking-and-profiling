@@ -407,5 +407,7 @@ foreach ($allSubjects as $subj) {
     <?php include __DIR__ . '/../partials/campus_map_modal.php'; ?>
 
     <script src="<?= url('assets/mobile.js') ?>"></script>
+    <!-- Information Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/info_modal.php'; ?>
 </body>
 </html>

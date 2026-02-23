@@ -15,6 +15,20 @@ check_and_process_expirations();
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE role = 'teacher' AND is_active = 1");
 $stmt->execute();
 $totalFaculty = $stmt->fetchColumn();
+
+// Diagnostic Logic
+$is_db_up = true; // If we reached here, DB is up
+$is_leaflet_up = false;
+try {
+    // Check if radar center setting exists as a proxy for Leaflet Map status
+    $stmt = $pdo->prepare("SELECT 1 FROM system_settings WHERE `key` = 'campus_center_lat' LIMIT 1");
+    $stmt->execute();
+    if ($stmt->fetch()) $is_leaflet_up = true;
+} catch (Exception $e) { $is_leaflet_up = false; }
+
+$is_linkybot_up = !empty(getenv('PERPLEXITY_API_KEY'));
+
+$system_operational = $is_db_up && $is_leaflet_up && $is_linkybot_up;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -173,23 +187,29 @@ $totalFaculty = $stmt->fetchColumn();
                     <!-- System Status -->
                     <div class="col-span-1 md:col-span-3 bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-slate-700 p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
                          <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-400">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+                            <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center <?= $system_operational ? 'text-emerald-500' : 'text-amber-500' ?>">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04M12 2.944a11.955 11.955 0 01-8.618 3.04m17.236 0L21 21l-9-4-9 4 1.764-15.016"></path></svg>
                             </div>
                             <div>
                                 <h3 class="font-bold text-slate-800 dark:text-white">System Status</h3>
-                                <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Operational check passed</p>
+                                <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                                    <?= $system_operational ? 'Operational check passed' : 'System check: Partial service' ?>
+                                </p>
                             </div>
                          </div>
                          
-                         <div class="flex gap-6">
+                         <div class="flex flex-wrap gap-6">
                              <div class="flex items-center gap-2.5">
-                                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
+                                 <span class="w-2.5 h-2.5 rounded-full <?= $is_db_up ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.5)]' ?>"></span>
                                  <span class="text-sm font-semibold text-slate-600 dark:text-slate-300">Database</span>
                              </div>
                              <div class="flex items-center gap-2.5">
-                                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
-                                 <span class="text-sm font-semibold text-slate-600 dark:text-slate-300">Geolocation Services</span>
+                                 <span class="w-2.5 h-2.5 rounded-full <?= $is_leaflet_up ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.5)]' ?>"></span>
+                                 <span class="text-sm font-semibold text-slate-600 dark:text-slate-300">Leaflet Map</span>
+                             </div>
+                             <div class="flex items-center gap-2.5">
+                                 <span class="w-2.5 h-2.5 rounded-full <?= $is_linkybot_up ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.5)]' ?>"></span>
+                                 <span class="text-sm font-semibold text-slate-600 dark:text-slate-300">LinkyBot</span>
                              </div>
                          </div>
                     </div>
@@ -199,5 +219,7 @@ $totalFaculty = $stmt->fetchColumn();
         </main>
         </div>
     </div>
+    <!-- Information Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/info_modal.php'; ?>
 </body>
 </html>

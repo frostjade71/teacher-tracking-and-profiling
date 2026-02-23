@@ -134,5 +134,7 @@ $logs = $stmt->fetchAll();
         </main>
         </div>
     </div>
+    <!-- Information Modal (Shared) -->
+    <?php include __DIR__ . '/../partials/info_modal.php'; ?>
 </body>
 </html>

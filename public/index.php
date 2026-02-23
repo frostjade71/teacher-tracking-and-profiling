@@ -23,6 +23,7 @@ $routes = [
     'teacher_dashboard' => __DIR__ . '/../app/pages/teacher_dashboard.php',
     'admin_dashboard' => __DIR__ . '/../app/pages/admin_dashboard.php',
     'admin_analytics' => __DIR__ . '/../app/pages/admin_analytics.php',
+    'admin_teachers_view' => __DIR__ . '/../app/pages/admin_teachers_view.php',
     'admin_monitor' => __DIR__ . '/../app/pages/admin_monitor.php',
 
     // Logs
