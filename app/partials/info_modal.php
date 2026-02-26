@@ -82,7 +82,7 @@
                         </p>
                         <div class="h-1 w-12 bg-blue-500 rounded-full mt-4"></div>
                         <div class="mt-4 text-xs font-bold text-slate-600 dark:text-slate-400">
-                            By Group 3 College Seniors<br>
+                            By 1 College Seniors<br>
                             Holy Cross College of Carigara Incorporated<br>
                             Batch 2025-2026
                         </div>
